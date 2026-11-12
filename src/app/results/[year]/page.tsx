@@ -7,6 +7,7 @@ import { achievement, formatDate, link, mediaByUsage, parsePartners, pickMedia, 
 import { KpiDashboard, type KpiLite } from "@/components/KpiDashboard";
 import { StoryCard } from "@/components/cards";
 import { Gallery } from "@/components/Gallery";
+import { Quotes } from "@/components/Quotes";
 import { CountUp } from "@/components/CountUp";
 import { Photo } from "@/components/Photo";
 import { TimelineExplorer, type TimelineEntry } from "@/components/TimelineExplorer";
@@ -119,6 +120,7 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
   const obs = fb.filter((f) => f.kind === "海洋觀察");
   const quiz = fb.filter((f) => f.kind === "安全測驗");
   const improve = fb.filter((f) => f.kind === "改善追蹤");
+  const quotes = fb.filter((f) => f.kind === "參與者心得");
   const inclusionStories = stories.filter((s) => s.themes.includes("共融"));
 
   return (
@@ -396,7 +398,14 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
               </div>
             </div>
           ) : null}
-          <p className="mt-6 text-sm text-ink-soft">參與者個人心得將在取得原始回饋與公開同意後上架；本頁僅呈現去識別化統計。</p>
+          {quotes.length ? (
+            <div className="mt-10">
+              <h3 className="text-lg font-bold">參與者心得</h3>
+              <div className="mt-4"><Quotes items={quotes} /></div>
+            </div>
+          ) : (
+            <p className="mt-6 text-sm text-ink-soft">參與者個人心得將在取得原始回饋與公開同意後上架；本頁僅呈現去識別化統計。</p>
+          )}
         </div>
       </section>
 

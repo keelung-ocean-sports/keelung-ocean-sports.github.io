@@ -7,6 +7,7 @@ import { ActivityCard, StoryCard } from "@/components/cards";
 import { CountUp } from "@/components/CountUp";
 import { Icon } from "@/components/Icon";
 import { Photo } from "@/components/Photo";
+import { Quotes } from "@/components/Quotes";
 import { Callout, LineCta, SectionTitle } from "@/components/ui";
 
 export const revalidate = 300;
@@ -40,6 +41,7 @@ export default async function HomePage() {
   const recent = [...c.activities].filter((a) => a.status === "已完成" && a.coverId).reverse().slice(0, 6);
   const notices = activeNotices(c);
   const stories = [...c.stories].reverse();
+  const quotes = c.feedback.filter((f) => f.kind === "參與者心得").slice(0, 3);
   const kpi = (id: string) => c.kpis.find((k) => k.year === "115" && k.id === id && k.confirm === "已列報" && k.actual);
   const k01 = kpi("K01");
   const resultsBg = mediaByUsage(c, "成果館主視覺")[0] ?? mediaByUsage(c, "年度精選")[0];
@@ -325,6 +327,13 @@ export default async function HomePage() {
                 </span>
               ))}
             </Link>
+          ) : null}
+          {quotes.length ? (
+            <div className="mt-12">
+              <p className="eyebrow">VOICES</p>
+              <h3 className="mt-1 text-2xl font-black">參與者這樣說</h3>
+              <div className="mt-5"><Quotes items={quotes} /></div>
+            </div>
           ) : null}
         </section>
       ) : null}

@@ -388,7 +388,7 @@ export const tables = {
     {
       year: required("年度"),
       id: required("項目ID"),
-      kind: oneOf("類型", ["滿意度題項", "學習成效", "海洋觀察", "安全測驗", "改善追蹤"] as const),
+      kind: oneOf("類型", ["滿意度題項", "學習成效", "海洋觀察", "安全測驗", "改善追蹤", "參與者心得"] as const),
       name: required("項目"),
       value: optional,
       unit: optional,

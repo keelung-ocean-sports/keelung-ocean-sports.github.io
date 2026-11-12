@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getContent } from "@/lib/cms";
-import { achievement, link, pickMedia } from "@/lib/view";
+import { achievement, pickMedia } from "@/lib/view";
 import { CountUp } from "@/components/CountUp";
 import { SelfRating } from "@/components/SelfRating";
 import { Icon } from "@/components/Icon";
@@ -40,7 +40,6 @@ const SOP = [
 
 export default async function FitnessPage() {
   const c = await getContent();
-  const coachForm = link(c, "form_fitness_coach");
   const hero = pickMedia(c, ["M115-0801-am-tent-briefing"])[0];
   const years = c.kpis.filter((k) => k.id === "K10" && k.actual).sort((a, b) => b.year.localeCompare(a.year));
   const k10 = years[0];
@@ -97,14 +96,6 @@ export default async function FitnessPage() {
           <p className="mt-2 text-[15px] text-ink-soft">「當日報到暨下水前科技體適能檢測紀錄表」空白版，每頁 10 人，含 SpO₂、PR、單腳站立、30 秒坐站、三項自評與綠／黃／紅分流欄位。</p>
           <a href="/downloads/115-fitness-checkin-record-a4-blank.pdf" download className="btn-teal mt-4"><Icon name="download" className="h-4 w-4" />下載空白紀錄表（PDF）</a>
           <p className="mt-2 text-xs text-ink-soft">表頭為115年度計畫版本；新年度使用前請更新計畫名稱與補助單位欄位。</p>
-        </div>
-        <div className="card p-6">
-          <h3 className="text-xl font-bold">Google 正式檢測表單</h3>
-          {coachForm ? (
-            <a href={coachForm.url} target="_blank" rel="noopener noreferrer" className="btn-teal mt-4">開啟教練檢測表單<Icon name="external" className="h-4 w-4" /></a>
-          ) : (
-            <p className="mt-2 text-[15px] text-ink-soft">建置中。表單建立後，由協會在內容管理表「公開連結」填入填答網址即會出現在這裡。</p>
-          )}
         </div>
       </div>
     </div>

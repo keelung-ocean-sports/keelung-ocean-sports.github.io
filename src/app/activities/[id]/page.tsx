@@ -7,6 +7,7 @@ import { StatusBadge, TypeChips } from "@/components/cards";
 import { Gallery } from "@/components/Gallery";
 import { Icon } from "@/components/Icon";
 import { Photo } from "@/components/Photo";
+import { Quotes } from "@/components/Quotes";
 import { Callout, LineCta, SafetyNote } from "@/components/ui";
 
 export const revalidate = 300;
@@ -56,6 +57,9 @@ export default async function ActivityPage({ params }: { params: Promise<{ id: s
   const prev = c.activities[idx - 1];
   const next = c.activities[idx + 1];
   const training = a.types.includes("專業培訓");
+  // 回饋心得的「說明」以「7/4 上午場」開頭時，對應到同日活動
+  const md = `${Number(a.date.slice(5, 7))}/${Number(a.date.slice(8, 10))}`;
+  const quotes = c.feedback.filter((f) => f.kind === "參與者心得" && f.year === a.year && (f.note === md || f.note.startsWith(`${md} `)));
 
   const facts = [
     { k: "日期", v: d.full },
@@ -131,6 +135,13 @@ export default async function ActivityPage({ params }: { params: Promise<{ id: s
               {record.map((b) => <p key={b.title} className="mt-3 text-[16px] leading-8">{b.body}</p>)}
               {!record.length && a.result ? <p className="mt-3 text-[16px] leading-8">{a.result}</p> : null}
               <Link href={`/results/${a.year}#timeline`} className="mt-4 inline-flex items-center gap-1 font-bold text-teal hover:text-deep">在{a.year}年度成果館看這一天<Icon name="arrow" className="h-4 w-4" /></Link>
+            </section>
+          ) : null}
+
+          {quotes.length ? (
+            <section>
+              <h2 className="text-2xl font-black">參與者這樣說</h2>
+              <div className="mt-4"><Quotes items={quotes} /></div>
             </section>
           ) : null}
 
