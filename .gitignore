@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+.env
+.env.local
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+docs/驗收報告與待補清單.md

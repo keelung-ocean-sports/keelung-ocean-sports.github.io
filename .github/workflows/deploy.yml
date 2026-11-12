@@ -1,0 +1,63 @@
+# 免費部署：GitHub Pages（靜態網站）
+# - 推送程式、每 30 分鐘排程、或在 Actions 頁按「Run workflow」時，
+#   從 Google 試算表重新讀取內容並發布。
+# - 試算表 ID 設在 Settings → Secrets and variables → Actions → Variables：GOOGLE_SHEET_ID
+name: 更新並發布網站
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_SHEET_ID: ${{ vars.GOOGLE_SHEET_ID }}
+      NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io', github.repository_owner) }}
+      SITE_PREVIEW_MODE: "false"
+      TZ: Asia/Taipei
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: 內容檢核（結果顯示在本次執行的 Summary）
+        run: npm run content-report
+      - name: 建置靜態網站
+        run: npm run build:static
+      - run: touch out/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+      # GitHub 會停用 60 天沒有活動的公開儲存庫排程；每次執行時重新啟用本流程，避免自動更新停擺。
+      - name: 維持排程啟用
+        if: github.event_name == 'schedule'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/deploy.yml/enable"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

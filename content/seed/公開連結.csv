@@ -1,0 +1,9 @@
+連結ID,名稱,用途,網址,年度,是否為填答網址,確認狀態,發布狀態,備註
+line_official,基隆海洋運動俱樂部官方LINE,聯繫與會員回流,https://reurl.cc/mp1MdY,,否,已確認,已發布,使用者於網站開發指令提供
+goocean_app,GoOcean 海洋遊憩風險資訊 App,海況查詢,https://apps.apple.com/tw/app/id1632553148,,否,已確認,已發布,國家海洋研究院推出之海洋遊憩風險 App（App Store 頁面）；Android 版連結待補
+form_registration_115,115年度｜俱樂部總報名表,報名,https://docs.google.com/forms/d/167s7pIc3RftyjW9HQhYEheeASiYk4NF5a5KmgOr44LU/viewform,115,是,待確認,草稿,115年度表單，回覆已用於期末統計；116年度請另建新表單，勿沿用
+form_safety_quiz_115,115年度｜水域安全教育任務測驗,正式安全教育,https://docs.google.com/forms/d/1VBOrLK6gBD8ZMZXSqJU7vHIFMaGrOfB4QhuwGxefEz4/viewform,115,是,待確認,草稿,115年度表單（回覆期間6/22–10/2）；新年度請複製新表單後填入
+form_member_interest,俱樂部會員意願表,會員回流,https://docs.google.com/forms/d/1oJcY1foE6C24Dna6ycopUQTpIM2nD9Mvj0afMFhW0fE/viewform,115,是,待確認,草稿,確認仍開放填答後再改為已確認／已發布
+form_fitness_coach,科技體適能正式檢測表單（教練用）,教練檢測,,,是,待確認,草稿,尚未建立；建立後填入填答網址
+form_feedback_next,活動後回饋與海洋觀察紀錄（新年度）,活動後回饋,,,是,待確認,草稿,115年度依場次建了6份回饋表單；新年度建議改為單一表單加「場次」選項
+result_video_115,115年度結案成果影片,成果影片,,115,否,待確認,草稿,期末報告列載完成1部；請填入可公開之YouTube或Drive連結

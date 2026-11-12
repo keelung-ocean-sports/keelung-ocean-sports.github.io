@@ -1,0 +1,12 @@
+設定鍵,設定值,是否公開,說明
+site_name,基隆海洋運動俱樂部,是,網站主品牌
+site_name_en,KEELUNG OCEAN SPORTS CLUB,是,英文識別
+slogan,一起去海邊運動吧！,是,主要標語
+operator,基隆市潮境理海生態保育協會,是,營運及主辦單位
+operator_logo,/brand/chaojing-association-logo.png,是,協會 Logo（原檔，不得改色或變形）
+main_venue,基隆外木山海興,是,主要活動場域
+tagline_long,以基隆外木山海岸為主場域，結合 SUP 立式划槳、浮潛與水域安全教育，讓社區民眾、親子家庭與不同需求的夥伴，從岸上認識裝備、練習操作，再由教練帶領安全入水。,是,首頁與關於我們簡介，取材自期末成果報告第2頁
+contact_person,,否,聯絡人姓名；公開前請確認本人同意，再填入並改為「是」
+contact_phone,,否,個人手機，不放進公開儲存庫；如需公開請直接在試算表填入並改為「是」
+contact_address,,否,協會通訊地址；如需公開請在試算表填入並改為「是」
+contact_email,,否,協會公務信箱（待補）

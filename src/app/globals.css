@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --deep: #0b3c49;
+  --teal: #137c85;
+  --shallow: #b0dde0;
+  --sand: #f2e3c6;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  @apply bg-white text-ink antialiased;
+  font-size: 17px;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+}
+h1, h2, h3, h4 {
+  @apply font-display text-deep;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  text-wrap: balance;
+}
+p { text-wrap: pretty; }
+
+:focus-visible {
+  outline: 3px solid #f2b84b;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-content px-4 sm:px-6 lg:px-8; }
+  .eyebrow { @apply text-xs font-bold uppercase tracking-[0.22em] text-teal; }
+  .btn { @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-bold transition-colors; }
+  .btn-primary { @apply btn bg-sand text-deep hover:bg-white; }
+  .btn-teal { @apply btn bg-teal text-white hover:bg-deep; }
+  .btn-outline { @apply btn border-2 border-current bg-transparent hover:bg-white/10; }
+  .btn-line { @apply btn bg-[#06C755] text-white hover:bg-[#05a648]; }
+  .card { @apply rounded-2xl bg-white shadow-[0_1px_2px_rgba(11,60,73,.06),0_8px_24px_-12px_rgba(11,60,73,.25)] ring-1 ring-deep/5; }
+  .chip { @apply inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold ring-1; }
+  .prose-zh p { @apply mb-4; }
+  .wave-divider { background: radial-gradient(120% 60% at 50% 0%, transparent 60%, #fff 61%); }
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.animate-rise { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+.animate-rise-delay { animation: rise .8s .15s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes kenburns { from { transform: scale(1.06); } to { transform: scale(1); } }
+.animate-kenburns { animation: kenburns 9s ease-out both; }
