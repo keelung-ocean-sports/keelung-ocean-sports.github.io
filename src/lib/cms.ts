@@ -1,6 +1,6 @@
 import "server-only";
 import { cache } from "react";
-import { promises as fs } from "fs";
+import { existsSync, promises as fs } from "fs";
 import path from "path";
 import Papa from "papaparse";
 import { tables, type TableKey } from "./schema";
@@ -187,6 +187,12 @@ export const getContent = cache(async (): Promise<Content> => {
 
   const media = published(get("media").rows as Media[])
     .filter((m) => m.consent === "已授權" || (PREVIEW_MODE && m.consent === "待確認"))
+    .filter((m) => {
+      // 站內檔案已刪除（例如換照片後試算表還沒更新）就不顯示，避免破圖
+      if (!m.src.startsWith("/") || existsSync(path.join(process.cwd(), "public", m.src))) return true;
+      issues.push({ table: "照片與影片", id: m.id, level: "warning", message: `找不到檔案 ${m.src}，已隱藏。` });
+      return false;
+    })
     .sort(byOrder);
 
   const links = published(get("links").rows as LinkRow[]).filter((l) => {

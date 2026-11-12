@@ -45,6 +45,8 @@ export default async function ActivityPage({ params }: { params: Promise<{ id: s
   const mm = mediaMap(c);
   const cover = a.coverId ? mm.get(a.coverId) : undefined;
   const photos = c.media.filter((m) => m.activityId === a.id && m.kind === "照片");
+  // 站內影片（/media/…mp4）；YouTube 影片放在故事頁
+  const videos = c.media.filter((m) => m.activityId === a.id && m.kind === "影片" && /\.mp4$/i.test(m.src) && m.src.startsWith("/"));
   const story = c.stories.find((s) => s.activityId === a.id);
   const storyCover = story?.coverId ? mm.get(story.coverId) : undefined;
   const blocks = c.activityBlocks.filter((b) => b.activityId === a.id);
@@ -150,6 +152,23 @@ export default async function ActivityPage({ params }: { params: Promise<{ id: s
               <h2 className="text-2xl font-black">活動照片</h2>
               <p className="mt-1 text-sm text-ink-soft">點照片放大，可左右滑動或用方向鍵切換。</p>
               <div className="mt-4"><Gallery items={photos.map((m) => ({ id: m.id, src: m.src, alt: m.alt, caption: m.caption, pending: m.consent !== "已授權", date: m.date }))} /></div>
+            </section>
+          ) : null}
+
+          {videos.length ? (
+            <section>
+              <h2 className="text-2xl font-black">現場影片</h2>
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                {videos.map((v) => (
+                  <figure key={v.id} className="overflow-hidden rounded-2xl bg-deep ring-1 ring-ink/10">
+                    <video controls playsInline preload="none" poster={v.src.replace(/\.mp4$/i, "-poster.jpg")} className="aspect-video w-full bg-black" aria-label={v.alt}>
+                      <source src={v.src} type="video/mp4" />
+                      <a href={v.src}>下載影片</a>
+                    </video>
+                    {v.caption ? <figcaption className="px-4 py-3 text-sm text-shallow">{v.caption}</figcaption> : null}
+                  </figure>
+                ))}
+              </div>
             </section>
           ) : null}
 
