@@ -61,3 +61,19 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 確認網站已上線
+        run: |
+          sleep 20
+          base="https://${{ github.repository_owner }}.github.io"
+          for p in / /activities/ /results/115/ /media/115/0816-training-sup-group.jpg; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$base$p")
+            echo "$p → $code"
+            [ "$code" = "200" ] || exit 1
+          done
+          curl -s "$base/" | grep -o '<title>[^<]*' | head -1
+          curl -s "$base/" | grep -q '基隆海洋運動俱樂部' && echo "首頁內容正確"
