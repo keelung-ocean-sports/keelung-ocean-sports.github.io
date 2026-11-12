@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getContent } from "@/lib/cms";
-import { achievement, formatDate, link, mediaByUsage, parsePartners, pickMedia, splitList, yearRow } from "@/lib/view";
+import { achievement, formatDate, link, mediaByUsage, parsePartners, pickMedia, splitList, yearRow, programVisual } from "@/lib/view";
 import { KpiDashboard, type KpiLite } from "@/components/KpiDashboard";
 import { StoryCard } from "@/components/cards";
 import { Gallery } from "@/components/Gallery";
@@ -119,6 +119,12 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
               <div className="flex items-center gap-3">
                 <span className="text-sm text-ink-soft">{y.sponsorLabel}</span>
                 <Image src={y.sponsorLogo} alt={`${y.sponsor}標誌`} width={437} height={120} className="h-12 w-auto" />
+              </div>
+            ) : null}
+            {programVisual(y.year) ? (
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-ink-soft">主計畫視覺</span>
+                <Image src={programVisual(y.year)!.src} alt={programVisual(y.year)!.alt} width={programVisual(y.year)!.w} height={programVisual(y.year)!.h} className="h-20 w-auto" />
               </div>
             ) : null}
           </div>

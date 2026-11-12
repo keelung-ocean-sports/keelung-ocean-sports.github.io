@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getContent } from "@/lib/cms";
-import { achievement, activeNotices, isUpcoming, lineUrl, mediaByUsage, yearRow } from "@/lib/view";
+import { achievement, activeNotices, isUpcoming, lineUrl, mediaByUsage, yearRow, programVisual } from "@/lib/view";
 import { ActivityCard, StoryCard } from "@/components/cards";
 import { Icon } from "@/components/Icon";
 import { Photo } from "@/components/Photo";
@@ -72,6 +72,9 @@ export default async function HomePage() {
             <div className="flex items-center gap-5">
               {y115.sponsorLogo ? (
                 <Image src={y115.sponsorLogo} alt={`${y115.sponsor}標誌`} width={437} height={120} className="h-auto w-[200px] sm:w-[240px]" />
+              ) : null}
+              {programVisual(y115.year) ? (
+                <Image src={programVisual(y115.year)!.src} alt={programVisual(y115.year)!.alt} width={programVisual(y115.year)!.w} height={programVisual(y115.year)!.h} className="h-20 w-auto sm:h-24" />
               ) : null}
             </div>
             <div className="md:max-w-xl">

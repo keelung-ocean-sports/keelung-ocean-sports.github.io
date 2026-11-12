@@ -102,3 +102,9 @@ export function achievement(target: string, actual: string): string | null {
   if (!target || !actual || !isFinite(t) || !isFinite(a) || t <= 0) return null;
   return `${((a / t) * 100).toFixed(1)}%`;
 }
+
+/** 各年度主計畫視覺（使用者提供原檔，未改色未變形）。新年度若有不同主視覺，在此新增。 */
+const PROGRAM_VISUALS: Record<string, { src: string; alt: string; w: number; h: number }> = {
+  "115": { src: "/brand/115-program-visual-sports-for-all.png", alt: "115年山海運動聚落主計畫視覺：全民 To go／SPORTS FOR ALL", w: 911, h: 855 },
+};
+export const programVisual = (year: string) => PROGRAM_VISUALS[year];
