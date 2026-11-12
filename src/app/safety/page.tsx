@@ -38,7 +38,11 @@ export default async function SafetyPage() {
   const c = await getContent();
   const goocean = link(c, "goocean_app");
   const quizForm = link(c, "form_safety_quiz_115");
-  const videos = c.links.filter((l) => l.purpose === "安全影片" && l.url);
+  // 試算表若尚未加入「安全影片」列，先用協會提供的 3 支影片，避免區塊消失
+  const sheetVideos = c.links.filter((l) => l.purpose === "安全影片" && l.url);
+  const videos = sheetVideos.length
+    ? sheetVideos
+    : ["QOrVutORav8", "Wv5BMgE7RJw", "jGdqlK6V5hA"].map((id, i) => ({ id: `safety_video_${i + 1}`, name: `水域安全宣導影片 ${i + 1}`, url: `https://youtu.be/${id}` }));
   const embed = (u: string) => {
     const m = u.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
     return m ? `https://www.youtube-nocookie.com/embed/${m[1]}` : null;
