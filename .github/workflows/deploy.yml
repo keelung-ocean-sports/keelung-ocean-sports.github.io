@@ -1,7 +1,7 @@
 # 免費部署：GitHub Pages（靜態網站）
 # - 推送程式、每 30 分鐘排程、或在 Actions 頁按「Run workflow」時，
 #   從 Google 試算表重新讀取內容並發布。
-# - 試算表 ID 設在 Settings → Secrets and variables → Actions → Variables：GOOGLE_SHEET_ID
+# - 試算表 ID 預設寫在下方 GOOGLE_SHEET_ID；也可在 Settings → Secrets and variables → Actions → Variables 設 GOOGLE_SHEET_ID 覆蓋
 name: 更新並發布網站
 
 on:
@@ -25,7 +25,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GOOGLE_SHEET_ID: ${{ vars.GOOGLE_SHEET_ID }}
+      GOOGLE_SHEET_ID: ${{ vars.GOOGLE_SHEET_ID || '1ZfE_8lQnOd3VONuA2qdo75szfcUJxOolg6Nc_tx0euI' }}
       NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io', github.repository_owner) }}
       SITE_PREVIEW_MODE: "false"
       TZ: Asia/Taipei
