@@ -17,8 +17,10 @@ export function Photo({
   fill?: boolean;
   caption?: boolean;
 }) {
+  // 呼叫端指定 absolute/fixed 時不可再加 relative（Tailwind 中 relative 會蓋過 absolute，照片高度變 0 而看不見）
+  const position = /(^|\s)(absolute|fixed)(\s|$)/.test(className) ? "" : "relative ";
   return (
-    <figure className={`relative overflow-hidden ${className}`}>
+    <figure className={`${position}overflow-hidden ${className}`}>
       {fill ? (
         <Image src={m.src} alt={m.alt} fill sizes={sizes} priority={priority} className="object-cover" />
       ) : (

@@ -10,10 +10,11 @@ import { Callout, Empty, LineCta, SectionTitle } from "@/components/ui";
 export const revalidate = 300;
 
 const THEMES = [
-  { key: "SUP", title: "SUP 立式划槳", text: "從岸上站姿、跪姿到板上划槳，教練陪你一步一步找到平衡。", href: "/activities?type=SUP入門體驗" },
-  { key: "浮潛", title: "浮潛親海", text: "穿好救生衣、戴上面鏡與呼吸管，看見外木山水面下的生命。", href: "/activities?type=浮潛親海體驗" },
-  { key: "親子", title: "親子海洋運動", text: "大人小孩一起認識海、一起練習安全，把親海變成家庭日常。", href: "/activities?type=親子海洋運動" },
-  { key: "共融", title: "共融及適應性活動", text: "與社福團體合作，調整節奏與陪同人力，讓更多人有機會下水。", href: "/activities?type=共融及適應性海洋活動" },
+  // fallback：試算表沒有該主題的「主題封面」時使用的照片ID
+  { key: "SUP", fallback: "M115-0802-sup-group", title: "SUP 立式划槳", text: "從岸上站姿、跪姿到板上划槳，教練陪你一步一步找到平衡。", href: "/activities?type=SUP入門體驗" },
+  { key: "浮潛", fallback: "M115-0801-snorkel-observation", title: "浮潛親海", text: "穿好救生衣、戴上面鏡與呼吸管，看見外木山水面下的生命。", href: "/activities?type=浮潛親海體驗" },
+  { key: "親子", fallback: "M115-0816-training-banner", title: "親子海洋運動", text: "大人小孩一起認識海、一起練習安全，把親海變成家庭日常。", href: "/activities?type=親子海洋運動" },
+  { key: "共融", fallback: "M115-1004-fulong-sup-group", title: "共融及適應性活動", text: "與社福團體合作，調整節奏與陪同人力，讓更多人有機會下水。", href: "/activities?type=共融及適應性海洋活動" },
 ];
 
 export default async function HomePage() {
@@ -121,7 +122,7 @@ export default async function HomePage() {
           <SectionTitle eyebrow="ACTIVITIES" title="找到你的海洋運動" lead="以下為俱樂部推動的活動類型，實際開課以活動日曆公告為準。" />
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {THEMES.map((t) => {
-              const cover = c.media.find((m) => m.theme === t.key && m.usage.includes("主題封面"));
+              const cover = c.media.find((m) => m.theme === t.key && m.usage.includes("主題封面")) ?? c.media.find((m) => m.id === t.fallback);
               return (
                 <Link key={t.key} href={t.href} className="card group overflow-hidden">
                   <div className="relative aspect-[4/3] bg-gradient-to-br from-teal to-deep">
