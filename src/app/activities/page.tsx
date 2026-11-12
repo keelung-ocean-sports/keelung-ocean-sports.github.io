@@ -5,7 +5,7 @@ import { ActivityBrowser, type ActivityLite } from "@/components/ActivityBrowser
 import { Callout, LineCta, PageHero } from "@/components/ui";
 
 export const revalidate = 300;
-export const metadata: Metadata = { title: "海洋活動與報名", description: "SUP、浮潛、親子、共融海洋活動日曆、報名與活動回顧。" };
+export const metadata: Metadata = { title: "海洋活動與報名", description: "SUP、浮潛、親子、共融海洋活動日曆、報名與活動回顧。", alternates: { canonical: "/activities/" } };
 
 export default async function ActivitiesPage() {
   const c = await getContent();

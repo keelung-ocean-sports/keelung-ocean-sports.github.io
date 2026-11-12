@@ -31,7 +31,7 @@ export const ACTIVITY_TYPES = [
 ] as const;
 export const NOTICE_TYPES = ["一般", "正常辦理", "調整場地", "延期", "取消"] as const;
 export const CONSENT_STATES = ["已授權", "待確認", "不公開"] as const;
-export const KPI_CONFIRM = ["已列報", "待補佐證", "待確認", "未達成"] as const;
+export const KPI_CONFIRM = ["已列報", "協會確認達標", "待補佐證", "待確認", "未達成"] as const;
 export const IMPROVE_STATES = ["規劃中", "執行中", "已完成", "暫緩"] as const;
 
 const text = z.string().trim();

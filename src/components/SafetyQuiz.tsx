@@ -90,7 +90,7 @@ export function SafetyQuiz() {
           const answered = picked !== null;
           return (
             <li key={qi} className="card p-5 sm:p-6">
-              <fieldset>
+              <fieldset className="min-w-0">
                 <legend className="text-lg font-bold text-deep">
                   <span className="mr-2 text-teal">Q{qi + 1}</span>
                   {q.q}

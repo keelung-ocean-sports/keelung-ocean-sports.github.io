@@ -7,6 +7,9 @@ import { achievement, formatDate, link, mediaByUsage, parsePartners, pickMedia, 
 import { KpiDashboard, type KpiLite } from "@/components/KpiDashboard";
 import { StoryCard } from "@/components/cards";
 import { Gallery } from "@/components/Gallery";
+import { CountUp } from "@/components/CountUp";
+import { Photo } from "@/components/Photo";
+import { TimelineExplorer, type TimelineEntry } from "@/components/TimelineExplorer";
 import { Icon } from "@/components/Icon";
 import { Callout, Empty, SectionTitle } from "@/components/ui";
 
@@ -19,7 +22,11 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ year: string }> }): Promise<Metadata> {
   const { year } = await params;
-  return { title: `${year}年度成果館`, description: `${year}年度活動歷程、照片故事、安全教育、共融與 KPI 成果。` };
+  const c = await getContent();
+  const hero = mediaByUsage(c, "成果館主視覺").find((m) => m.year === year) ?? mediaByUsage(c, "年度精選").find((m) => m.year === year);
+  const title = `${year}年度成果館`;
+  const description = `${year}年度活動歷程、照片故事、安全教育、共融與 KPI 成果。`;
+  return { title, description, alternates: { canonical: `/results/${year}/` }, openGraph: { title, description, images: hero ? [{ url: hero.src, alt: hero.alt }] : undefined } };
 }
 
 const FLOW = ["計畫核定及啟動", "民眾認識與報名", "行前安全教育", "科技體適能", "實際海洋活動", "回饋及觀察", "會員回流", "年度成果"];
@@ -66,18 +73,34 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
   const operatorLogo = c.settings.operator_logo || "/brand/chaojing-association-logo.png";
 
   // 年度歷程：里程碑＋活動，依日期排序
-  const timeline = [
-    ...c.milestones.filter((m) => m.year === year).map((m) => ({ date: m.date, label: m.dateLabel || formatDate(m.date).roc, stage: m.stage, title: m.title, body: m.description, href: undefined as string | undefined, source: m.source })),
-    ...acts.map((a) => ({
-      date: a.date,
-      label: formatDate(a.date).roc,
-      stage: a.types.includes("專業培訓") ? "專業培力" : "實際海洋活動",
-      title: a.location ? `${a.name}｜${a.location}` : a.name,
-      body: a.result,
-      href: `/activities/${a.id}`,
-      source: "",
+  const mm = new Map(c.media.map((m) => [m.id, m]));
+  const kindOf = (types: string): TimelineEntry["kind"] =>
+    types.includes("專業培訓") ? "培訓" : types.includes("共融") ? "共融" : types.includes("趣味競賽") ? "競賽" : "水域活動";
+  const timeline: TimelineEntry[] = [
+    ...c.milestones.filter((m) => m.year === year).map((m, i) => ({
+      key: `m${i}`, date: m.date, label: m.dateLabel || formatDate(m.date).roc, kind: "里程碑" as const, title: m.title, body: m.description, source: m.source,
     })),
+    ...acts.map((a) => {
+      const cover = (a.coverId && mm.get(a.coverId)) || c.media.find((m) => m.activityId === a.id && m.kind === "照片");
+      const story = stories.find((s) => s.activityId === a.id);
+      return {
+        key: a.id,
+        date: a.date,
+        label: formatDate(a.date).roc,
+        kind: kindOf(a.types),
+        title: a.location ? `${a.name}｜${a.location}` : a.name,
+        body: a.result,
+        headcount: a.headcount || undefined,
+        href: `/activities/${a.id}`,
+        storyHref: story ? `/stories/${story.id}` : undefined,
+        photo: cover ? { src: cover.src, alt: cover.alt } : undefined,
+      };
+    }),
   ].sort((a, b) => a.date.localeCompare(b.date));
+  const kindCount = (["水域活動", "共融", "競賽", "培訓"] as const).map((k) => ({ k, n: timeline.filter((t) => t.kind === k).length })).filter((x) => x.n);
+  const heroPhoto = mediaByUsage(c, "成果館主視覺").find((m) => m.year === year) ?? featured[0];
+  const keyNums = ["K01", "S01", "S02", "S06", "K10", "S04"].map(kpi).filter((k): k is NonNullable<typeof k> => !!k && !!k.actual);
+  const highlightActs = acts.filter((a) => a.coverId).sort((a, b) => Number(b.headcount || 0) - Number(a.headcount || 0)).slice(0, 3).sort((a, b) => a.date.localeCompare(b.date));
 
   const rosterDays = acts.filter((a) => a.headcount);
   const rosterMax = Math.max(...rosterDays.map((a) => Number(a.headcount)), 1);
@@ -101,16 +124,37 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
   return (
     <>
       {/* 年度識別 */}
-      <section className="bg-deep text-shallow">
-        <div className="container-page py-12 sm:py-16">
-          <nav aria-label="麵包屑" className="text-sm"><Link href="/results" className="hover:underline">年度成果館</Link> ／ {year}年度</nav>
+      <section className="relative isolate overflow-hidden bg-deep text-shallow">
+        {heroPhoto ? (
+          <>
+            <div className="absolute inset-0 -z-10"><Photo m={heroPhoto} className="h-full w-full" sizes="100vw" priority /></div>
+            <div className="absolute inset-0 -z-10 bg-gradient-to-t from-deep-900/95 via-deep-900/60 to-deep-900/30" />
+          </>
+        ) : null}
+        <div className="container-page flex min-h-[64svh] flex-col justify-end py-12 sm:py-16">
+          <nav aria-label="麵包屑" className="text-sm text-white/80"><Link href="/results" className="hover:underline">年度成果館</Link> ／ {year}年度</nav>
           <p className="mt-6 text-sm font-bold tracking-[0.25em] text-sand">基隆海洋運動俱樂部｜{year}年度成果館</p>
           <h1 className="mt-3 max-w-4xl text-3xl font-black leading-tight !text-white sm:text-5xl">{y.name}</h1>
-          <p className="mt-3 text-lg">{y.program}</p>
-          <p className="mt-1 text-[15px] text-shallow/80">執行期間：{y.period}｜統計截止：{y.cutoff}｜場域：{y.venue}</p>
+          <p className="mt-3 text-lg text-white/90">{y.program}</p>
+          <p className="mt-1 text-[15px] text-white/75">執行期間：{y.period}｜統計截止：{y.cutoff}｜場域：{y.venue}</p>
+          {keyNums.length ? (
+            <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 text-white sm:grid-cols-3 lg:grid-cols-6">
+              {keyNums.map((k) => {
+                const r = achievement(k.target, k.actual);
+                return (
+                  <div key={k.id} className="border-l-2 border-sand/70 pl-3">
+                    <dt className="text-sm text-shallow">{k.name}</dt>
+                    <dd className="text-3xl font-black sm:text-4xl"><CountUp value={k.actual} /><span className="ml-1 text-sm font-bold text-sand">{k.actualUnit}</span></dd>
+                    {k.category === "核定KPI" && r ? <dd className="text-xs font-bold text-sand">達成率 {r}</dd> : null}
+                  </div>
+                );
+              })}
+            </dl>
+          ) : null}
+          {heroPhoto?.caption ? <p className="mt-6 text-xs text-white/60">主視覺：{heroPhoto.caption}</p> : null}
         </div>
         <div className="bg-white text-ink">
-          <div className="container-page flex flex-col gap-6 py-6 sm:flex-row sm:items-center sm:gap-10">
+          <div className="container-page flex flex-col gap-6 py-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-10">
             <div className="flex items-center gap-3">
               <Image src={operatorLogo} alt={`${y.executor}標誌`} width={832} height={725} className="h-14 w-auto" />
               <div className="text-sm leading-6"><span className="block text-ink-soft">執行單位</span><span className="font-bold text-deep">{y.executor}</span></div>
@@ -145,6 +189,30 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
           <p>「人次」是任務人次，不等於不重複人數；報名意願、回饋問卷份數不加入年度人次。{y.privacyNote}</p>
         </Callout>
         {y.summary ? <p className="mt-8 max-w-3xl text-lg leading-9">{y.summary}</p> : null}
+        {highlightActs.length ? (
+          <div className="mt-10">
+            <p className="eyebrow">HIGHLIGHTS</p>
+            <h2 className="mt-1 text-2xl font-black">從這幾場開始看</h2>
+            <ul className="mt-5 grid gap-4 sm:grid-cols-3">
+              {highlightActs.map((a) => {
+                const m = a.coverId ? mm.get(a.coverId) : undefined;
+                return (
+                  <li key={a.id}>
+                    <Link href={`/activities/${a.id}`} className="group relative block aspect-[4/5] overflow-hidden rounded-3xl bg-deep text-white sm:aspect-[3/4]">
+                      {m ? <Photo m={m} className="absolute inset-0 transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 640px) 100vw, 33vw" /> : null}
+                      <span className="absolute inset-0 bg-gradient-to-t from-deep-900/90 via-deep-900/20 to-transparent" />
+                      <span className="absolute inset-x-0 bottom-0 p-5">
+                        <span className="text-sm font-bold text-sand">{formatDate(a.date).full}{a.headcount ? `｜${a.headcount} 人次` : ""}</span>
+                        <span className="mt-1 block text-xl font-black leading-snug">{a.name}</span>
+                        <span className="mt-2 inline-flex items-center gap-1 text-sm font-bold text-shallow">看活動紀錄<Icon name="arrow" className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : null}
       </div>
 
       {/* 1 年度完整活動歷程 */}
@@ -158,26 +226,30 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
             </li>
           ))}
         </ol>
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
-          <ol className="relative border-l-2 border-shallow pl-6">
-            {timeline.map((t, i) => (
-              <li key={i} className="relative mb-6">
-                <span className={`absolute -left-[33px] top-1.5 h-4 w-4 rounded-full ring-4 ring-white ${t.href ? "bg-teal" : "bg-sand-700"}`} aria-hidden />
-                <p className="text-sm font-bold text-teal">{t.label}<span className="ml-2 rounded bg-shallow/40 px-1.5 py-0.5 text-xs text-deep">{t.stage}</span></p>
-                <p className="mt-1 font-bold text-deep">{t.href ? <Link href={t.href} className="hover:text-teal hover:underline">{t.title}</Link> : t.title}</p>
-                {t.body ? <p className="text-[15px] text-ink-soft">{t.body}</p> : null}
-                {t.source ? <p className="text-xs text-ink-soft/80">來源：{t.source}</p> : null}
-              </li>
-            ))}
-          </ol>
+        <div className="max-w-5xl"><TimelineExplorer entries={timeline} /></div>
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
           {rosterDays.length ? (
-            <div className="card h-fit p-6">
+            <div className="card p-6">
               <h3 className="text-lg font-bold">各活動日保險名冊人次</h3>
               <p className="text-sm text-ink-soft">同一人同一天只計一次；上下午共用日名冊。</p>
               <div className="mt-4 space-y-3">
-                {rosterDays.map((a) => <Bar key={a.id} label={`${formatDate(a.date).md}${a.location.includes("福隆") ? "（福隆）" : ""}`} value={Number(a.headcount)} max={rosterMax} suffix="" />)}
+                {rosterDays.map((a) => (
+                  <Link key={a.id} href={`/activities/${a.id}`} className="block rounded-lg transition hover:bg-shallow-50">
+                    <Bar label={`${formatDate(a.date).md}${a.location.includes("福隆") ? "（福隆）" : ""}`} value={Number(a.headcount)} max={rosterMax} suffix="" />
+                  </Link>
+                ))}
               </div>
               <p className="mt-4 border-t border-deep/10 pt-3 text-right font-black text-deep">合計 {rosterSum} 人次</p>
+            </div>
+          ) : null}
+          {kindCount.length ? (
+            <div className="card p-6">
+              <h3 className="text-lg font-bold">活動類型場次比較</h3>
+              <p className="text-sm text-ink-soft">依活動主要類型歸類；同日上下午分別計場。</p>
+              <div className="mt-4 space-y-3">
+                {kindCount.map((x) => <Bar key={x.k} label={x.k} value={x.n} max={Math.max(...kindCount.map((k) => k.n))} suffix=" 場" />)}
+              </div>
+              <p className="mt-4 border-t border-deep/10 pt-3 text-right font-black text-deep">共 {acts.length} 場</p>
             </div>
           ) : null}
         </div>
@@ -194,7 +266,7 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
           ) : null}
           <div className="mt-10">
             {yearPhotos.length ? (
-              <Gallery columns="sm:grid-cols-3 lg:grid-cols-4" items={(featured.length >= 8 ? featured : yearPhotos).map((m) => ({ id: m.id, src: m.src, alt: m.alt, caption: m.caption, pending: m.consent !== "已授權", meta: m.date ? formatDate(m.date).md : undefined }))} />
+              <Gallery layout="mosaic" items={(featured.length >= 8 ? featured : yearPhotos).map((m) => ({ id: m.id, src: m.src, alt: m.alt, caption: m.caption, pending: m.consent !== "已授權", meta: m.date ? formatDate(m.date).md : undefined, date: m.date, href: m.activityId ? `/activities/${m.activityId}` : undefined }))} />
             ) : (
               <Empty>照片完成肖像授權確認後公開。</Empty>
             )}
@@ -237,7 +309,15 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
             ))}
             <div className="card p-6">
               <h3 className="text-lg font-bold">人才培力（助教、救生、志工）</h3>
-              <p className="mt-2 text-[15px] text-ink-soft">依期末報告，助教培育、救生員培訓與青年志工人數由協會另附名冊列報；網站在名冊統計確認前不公開數字。</p>
+              <ul className="mt-3 space-y-2 text-[15px]">
+                {["K07", "K08", "K05"].map(kpi).filter(Boolean).map((k) => (
+                  <li key={k!.id} className="flex items-start justify-between gap-3">
+                    <span className="font-semibold text-deep">{k!.name}<span className="block text-xs font-normal text-ink-soft">目標 {k!.target} {k!.targetUnit}</span></span>
+                    <span className={`chip shrink-0 text-xs ${k!.confirm === "協會確認達標" || k!.confirm === "已列報" ? "bg-emerald-50 text-emerald-800 ring-emerald-300" : "bg-amber-50 text-amber-900 ring-amber-300"}`}>{k!.confirm === "協會確認達標" ? "協會確認達標" : k!.confirm}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-xs text-ink-soft">個人名冊含個資，不在網站公開；審查調閱請洽執行單位。</p>
             </div>
           </div>
         </div>
@@ -274,7 +354,7 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
             <div className="space-y-6">
               {obs.length ? (
                 <div className="card p-6">
-                  <h3 className="text-lg font-bold">海洋觀察與安全態度（96 份，可複選）</h3>
+                  <h3 className="text-lg font-bold">海洋觀察與安全態度（{obs[0]?.base || 96} 份，可複選）</h3>
                   <div className="mt-4 space-y-3">
                     {obs.map((o) => <Bar key={o.id} label={o.name} value={Number(o.value)} max={Number(o.base) || 96} suffix=" 份" />)}
                   </div>

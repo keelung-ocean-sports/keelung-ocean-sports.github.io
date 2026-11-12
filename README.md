@@ -92,6 +92,10 @@ Vercel 免費 Hobby 方案依其規定僅限個人非商業使用，協會網站
 curl -X POST "https://你的網域/api/revalidate?token=你的通行碼"
 ```
 
+### 圖片縮小版（靜態版）
+
+`public/media/` 新增或更換照片後執行 `python3 scripts/make_image_variants.py`，會產生 640／1080px 版本與 `src/lib/image-manifest.json`；靜態版以 `src/lib/image-loader.ts` 依螢幕寬度選圖。
+
 ## 6. 專案結構
 
 ```

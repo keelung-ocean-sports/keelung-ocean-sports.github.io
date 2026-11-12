@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { getContent } from "@/lib/cms";
-import { link } from "@/lib/view";
+import { achievement, link, pickMedia } from "@/lib/view";
+import { CountUp } from "@/components/CountUp";
+import { SelfRating } from "@/components/SelfRating";
 import { Icon } from "@/components/Icon";
 import { Tabs } from "@/components/Tabs";
 import { Callout, PageHero } from "@/components/ui";
 
 export const revalidate = 300;
-export const metadata: Metadata = { title: "科技體適能", description: "下水前科技體適能報到流程：血氧、心率、平衡、坐站評量與三項自評，以及教練安全分流。" };
+export const metadata: Metadata = { title: "科技體適能", description: "下水前科技體適能報到流程：血氧、心率、平衡、坐站評量與三項自評，以及教練安全分流。", alternates: { canonical: "/fitness/" } };
 
 const ITEMS = [
   { n: "01", t: "報到及身體狀況確認", why: "確認今天身體有沒有不舒服、有沒有需要特別注意的狀況。", how: "簽到時由教練詢問睡眠、進食、感冒或受傷情形。", tip: "任何不適都請主動說，教練才能幫你調整。" },
@@ -39,6 +41,10 @@ const SOP = [
 export default async function FitnessPage() {
   const c = await getContent();
   const coachForm = link(c, "form_fitness_coach");
+  const hero = pickMedia(c, ["M115-0801-am-tent-briefing"])[0];
+  const years = c.kpis.filter((k) => k.id === "K10" && k.actual).sort((a, b) => b.year.localeCompare(a.year));
+  const k10 = years[0];
+  const rate = k10 ? achievement(k10.target, k10.actual) : null;
 
   const publicView = (
     <div>
@@ -55,9 +61,11 @@ export default async function FitnessPage() {
           </li>
         ))}
       </ol>
-      <div className="mt-10 card p-6">
+      <div className="mt-10 grid gap-6 lg:grid-cols-2">
+      <SelfRating />
+      <div className="card p-6">
         <h3 className="text-xl font-bold">教練怎麼使用這些結果？</h3>
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+        <div className="mt-4 grid gap-3">
           {TRIAGE.map((x) => (
             <div key={x.t} className="flex items-center gap-3 rounded-xl bg-shallow-50 p-4">
               <span className={`grid h-10 w-10 shrink-0 place-items-center rounded-full text-lg font-black text-white ${x.c}`}>{x.t}</span>
@@ -66,6 +74,7 @@ export default async function FitnessPage() {
           ))}
         </div>
         <p className="mt-4 text-[15px] text-ink-soft">分流由安全負責教練綜合判斷，不會只看單一數字自動決定，也會隨當天海況調整。</p>
+      </div>
       </div>
     </div>
   );
@@ -103,7 +112,22 @@ export default async function FitnessPage() {
 
   return (
     <>
-      <PageHero eyebrow="TECH FITNESS CHECK-IN" title="科技體適能" lead="下水前花 5 分鐘，讓教練更了解你今天的狀態，安排最適合你的下水方式。" />
+      <PageHero eyebrow="TECH FITNESS CHECK-IN" title="科技體適能" lead="下水前花 5 分鐘，讓教練更了解你今天的狀態，安排最適合你的下水方式。" image={hero} />
+      {k10 ? (
+        <section className="bg-deep text-white">
+          <div className="container-page flex flex-col gap-4 py-8 sm:flex-row sm:items-center sm:gap-12">
+            <div>
+              <p className="text-sm text-shallow">{k10.year}年度科技體適能檢測</p>
+              <p className="text-5xl font-black"><CountUp value={k10.actual} /><span className="ml-1 text-lg font-bold text-sand">{k10.actualUnit}</span></p>
+            </div>
+            <div>
+              <p className="text-sm text-shallow">核定目標 {k10.target} {k10.targetUnit}</p>
+              {rate ? <p className="text-5xl font-black text-sand">{rate.replace("%", "")}<span className="ml-1 text-lg font-bold">%</span></p> : null}
+            </div>
+            <p className="max-w-md text-[15px] text-shallow/90">{k10.actualNote || "實體活動參與者於報到時完成檢測。"}個別檢測數值屬健康資訊，不公開。</p>
+          </div>
+        </section>
+      ) : null}
       <div className="container-page py-12">
         <div className="mb-8">
           <Callout kind="safety" title="重要說明">

@@ -1,8 +1,42 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import type { Media } from "@/lib/cms-types";
 import { Icon } from "./Icon";
+import { Photo } from "./Photo";
 
-export function PageHero({ eyebrow, title, lead, children, tone = "deep" }: { eyebrow: string; title: string; lead?: string; children?: ReactNode; tone?: "deep" | "sand" }) {
+export function PageHero({
+  eyebrow,
+  title,
+  lead,
+  children,
+  tone = "deep",
+  image,
+}: {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  children?: ReactNode;
+  tone?: "deep" | "sand";
+  image?: Media;
+}) {
+  if (image) {
+    // 全幅照片頁首：照片在下、漸層遮罩讓文字可讀，但保留畫面主體
+    return (
+      <section className="relative isolate overflow-hidden bg-deep text-white">
+        <div className="absolute inset-0 -z-10">
+          <Photo m={image} className="h-full w-full" sizes="100vw" priority />
+        </div>
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-deep-900/90 via-deep-900/55 to-deep-900/10" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-deep-900/70 to-transparent" />
+        <div className="container-page relative flex min-h-[46svh] flex-col justify-end py-14 sm:min-h-[52svh] sm:py-20">
+          <p className="eyebrow !text-shallow">{eyebrow}</p>
+          <h1 className="mt-3 max-w-3xl text-[32px] font-black leading-tight !text-white sm:text-5xl">{title}</h1>
+          {lead ? <p className="mt-4 max-w-2xl text-lg text-white/90">{lead}</p> : null}
+          {children}
+        </div>
+      </section>
+    );
+  }
   const dark = tone === "deep";
   return (
     <section className={`${dark ? "bg-deep text-shallow" : "bg-sand-50 text-ink"} relative overflow-hidden`}>
@@ -17,6 +51,19 @@ export function PageHero({ eyebrow, title, lead, children, tone = "deep" }: { ey
         {children}
       </div>
     </section>
+  );
+}
+
+/** 共用水域安全提醒（精簡版），避免每頁重複大段文字。 */
+export function SafetyNote() {
+  return (
+    <p className="flex items-start gap-2 rounded-xl bg-rose-50 px-4 py-3 text-[15px] leading-7 text-rose-950 ring-1 ring-rose-200" role="note">
+      <Icon name="alert" className="mt-1.5 h-4 w-4 shrink-0" />
+      <span>
+        水域活動是否進行，由教練依當日海況做 Go／No-Go 判斷；身體不適請在報到時主動告知。
+        <Link href="/safety" className="ml-1 font-bold underline underline-offset-4">海洋安全學院</Link>
+      </span>
+    </p>
   );
 }
 

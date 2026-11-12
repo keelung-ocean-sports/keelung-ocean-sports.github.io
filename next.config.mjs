@@ -21,7 +21,8 @@ const nextConfig = {
   // 讓伺服器端重新產生頁面時也能讀到內建資料（Vercel 等 serverless 環境需要）
   outputFileTracingIncludes: { "/**": ["./content/seed/**"] },
   images: {
-    unoptimized: STATIC,
+    // 靜態版不能即時壓縮圖片，改用預先產生的縮小版（scripts/make_image_variants.py）
+    ...(STATIC ? { loader: "custom", loaderFile: "./src/lib/image-loader.ts" } : {}),
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       // 允許試算表中填入的 Google Drive 公開縮圖網址（lh3 / drive.google.com）

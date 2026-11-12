@@ -46,7 +46,7 @@ export function ActivityCard({ a, c }: { a: Activity; c: Content }) {
           <TypeChips types={a.types} />
           <p className="flex items-start gap-1.5 text-[15px] text-ink-soft">
             <Icon name="pin" className="mt-1 h-4 w-4 shrink-0" />
-            {a.location || "地點依主辦單位公告"}｜{a.slot || [a.startTime, a.endTime].filter(Boolean).join("–") || "時間依公告"}
+            {[a.location || (past ? "" : "地點依主辦單位公告"), a.slot || [a.startTime, a.endTime].filter(Boolean).join("–") || (past ? "" : "時間依公告")].filter(Boolean).join("｜")}
           </p>
           {a.noticeType && a.noticeType !== "正常辦理" && a.notice ? (
             <p className="rounded-lg bg-amber-50 p-2 text-sm font-semibold text-amber-900">異動：{a.notice}</p>
@@ -61,13 +61,13 @@ export function ActivityCard({ a, c }: { a: Activity; c: Content }) {
   );
 }
 
-export function StoryCard({ s, c }: { s: Story; c: Content }) {
+export function StoryCard({ s, c, compact = false }: { s: Story; c: Content; compact?: boolean }) {
   const cover = s.coverId ? mediaMap(c).get(s.coverId) : undefined;
   const d = formatDate(s.date);
   return (
     <article className="card group overflow-hidden">
-      <Link href={`/stories/${s.id}`} className="block">
-        <div className="relative aspect-[4/3] bg-gradient-to-br from-teal to-deep">
+      <Link href={`/stories/${s.id}`} className={compact ? "grid h-full grid-cols-[40%_1fr]" : "block"}>
+        <div className={`relative bg-gradient-to-br from-teal to-deep ${compact ? "min-h-[150px]" : "aspect-[4/3]"}`}>
           {cover ? <Photo m={cover} className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.03]" sizes="(max-width: 768px) 100vw, 33vw" /> : null}
         </div>
         <div className="p-5">

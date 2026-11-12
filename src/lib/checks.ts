@@ -16,7 +16,10 @@ export function consistencyChecks(c: Content) {
       const total = Number(s01.actual) + Number(s02.actual);
       checks.push({ ok: total === Number(k01.actual), text: `${y.year}年度：名冊 ${s01.actual} ＋ 安全教育 ${s02.actual} ＝ ${total}，年度任務人次填 ${k01.actual}` });
     }
-    const unconfirmed = c.kpis.filter((k) => k.year === y.year && k.category === "核定KPI" && k.confirm !== "已列報");
+    const coreK = c.kpis.filter((k) => k.year === y.year && k.category === "核定KPI");
+    const assoc = coreK.filter((k) => k.confirm === "協會確認達標");
+    const unconfirmed = coreK.filter((k) => k.confirm !== "已列報" && k.confirm !== "協會確認達標");
+    if (assoc.length) checks.push({ ok: true, text: `${y.year}年度：${assoc.length} 項核定KPI為「協會確認達標」（${assoc.map((k) => k.name).join("、")}），公開頁顯示達標、不顯示人數` });
     if (unconfirmed.length) checks.push({ ok: false, text: `${y.year}年度：${unconfirmed.length} 項核定KPI尚未列報（${unconfirmed.map((k) => k.name).join("、")}），公開頁只顯示目標` });
   }
   const pendingMedia = c.media.filter((m) => m.consent !== "已授權").length;

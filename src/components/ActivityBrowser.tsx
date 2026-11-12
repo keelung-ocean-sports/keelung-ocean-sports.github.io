@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { ACTIVITY_TYPES } from "@/lib/schema";
 import { STATUS_STYLE, TYPE_SHORT, WEEKDAYS, formatDate } from "@/lib/view";
+import Image from "next/image";
 import { Icon } from "./Icon";
 
 export type ActivityLite = {
@@ -59,16 +60,16 @@ export function ActivityBrowser({ items, today }: { items: ActivityLite[]; today
   return (
     <div>
       <div className="flex flex-col gap-4 rounded-2xl bg-shallow-50 p-4 ring-1 ring-teal/15 sm:p-5">
-        <fieldset>
+        <fieldset className="min-w-0">
           <legend className="mb-2 text-sm font-bold text-deep">活動類型</legend>
-          <div className="flex flex-wrap gap-2">
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
             {["全部", ...usedTypes, ...(initialType && !usedTypes.includes(initialType) && (ACTIVITY_TYPES as readonly string[]).includes(initialType) ? [initialType] : [])].map((t) => (
               <button
                 key={t}
                 type="button"
                 aria-pressed={type === t}
                 onClick={() => setType(t)}
-                className={`min-h-[40px] rounded-full px-4 text-[15px] font-semibold ring-1 transition ${type === t ? "bg-deep text-white ring-deep" : "bg-white text-deep ring-deep/15 hover:ring-teal"}`}
+                className={`min-h-[40px] shrink-0 whitespace-nowrap rounded-full px-4 text-[15px] font-semibold ring-1 transition ${type === t ? "bg-deep text-white ring-deep" : "bg-white text-deep ring-deep/15 hover:ring-teal"}`}
               >
                 {t === "全部" ? "全部" : TYPE_SHORT[t] ?? t}
               </button>
@@ -76,7 +77,7 @@ export function ActivityBrowser({ items, today }: { items: ActivityLite[]; today
           </div>
         </fieldset>
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <fieldset className="flex flex-wrap gap-2">
+          <fieldset className="min-w-0 flex flex-wrap gap-2">
             <legend className="sr-only">時間範圍</legend>
             {(["全部", "近期", "回顧"] as const).map((s) => (
               <button
@@ -110,32 +111,51 @@ export function ActivityBrowser({ items, today }: { items: ActivityLite[]; today
 
       {view === "list" ? (
         filtered.length ? (
-          <ol className="mt-4 grid gap-4">
-            {filtered.map((a) => (
-              <li key={a.id}>
-                <Link href={`/activities/${a.id}`} className="card group flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:p-5">
-                  <div className="flex shrink-0 items-center gap-4 sm:w-40 sm:flex-col sm:items-start sm:gap-1">
-                    <span className="text-3xl font-black text-deep">{Number(a.date.slice(5, 7))}/{Number(a.date.slice(8, 10))}</span>
-                    <span className="text-sm font-semibold text-ink-soft">
-                      {Number(a.date.slice(0, 4)) - 1911}年｜週{formatDate(a.date).weekday}
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className={`chip ${STATUS_STYLE[a.status]?.className ?? ""}`}>{STATUS_STYLE[a.status]?.label ?? a.status}</span>
-                      {a.types.map((t) => (
-                        <span key={t} className="rounded-full bg-shallow/40 px-2.5 py-0.5 text-[13px] font-semibold text-deep">{TYPE_SHORT[t] ?? t}</span>
-                      ))}
-                    </div>
-                    <h3 className="mt-2 text-lg font-bold group-hover:text-teal">{a.name}</h3>
-                    <p className="text-[15px] text-ink-soft">{a.location || "地點依公告"}｜{a.slot || "時間依公告"}</p>
-                    {a.result ? <p className="mt-1 text-sm text-teal">{a.result}</p> : null}
-                  </div>
-                  <Icon name="arrow" className="hidden h-5 w-5 text-teal sm:block" />
-                </Link>
-              </li>
-            ))}
-          </ol>
+          <div className="mt-4 space-y-10">
+            {[
+              { key: "upcoming", title: "即將舉行", list: filtered.filter((a) => !(a.status === "已完成" || a.date < today)) },
+              { key: "past", title: "活動回顧", list: [...filtered.filter((a) => a.status === "已完成" || a.date < today)].reverse() },
+            ]
+              .filter((g) => g.list.length)
+              .map((g) => (
+                <section key={g.key} aria-label={g.title}>
+                  <h2 className="mb-3 flex items-center gap-2 text-xl font-black text-deep">
+                    <span className={`h-2.5 w-2.5 rounded-full ${g.key === "upcoming" ? "bg-emerald-500" : "bg-slate-400"}`} />
+                    {g.title}
+                    <span className="text-sm font-semibold text-ink-soft">{g.list.length} 場</span>
+                  </h2>
+                  <ol className="grid gap-4">
+                    {g.list.map((a) => (
+                      <li key={a.id}>
+                        <Link href={`/activities/${a.id}`} className="card group flex items-stretch overflow-hidden">
+                          <div className="relative w-28 shrink-0 bg-gradient-to-br from-deep to-teal sm:w-56">
+                            {a.cover ? <Image src={a.cover.src} alt="" fill sizes="(max-width: 640px) 112px, 224px" className="object-cover transition-transform duration-700 group-hover:scale-105" /> : (
+                              <Icon name="wave" className="absolute inset-0 m-auto h-10 w-10 text-white/30" />
+                            )}
+                            <span className="absolute left-2 top-2 rounded-lg bg-white/95 px-2 py-1 text-center leading-tight shadow">
+                              <span className="block text-lg font-black text-deep sm:text-xl">{Number(a.date.slice(5, 7))}/{Number(a.date.slice(8, 10))}</span>
+                              <span className="block text-[11px] font-bold text-teal">週{formatDate(a.date).weekday}</span>
+                            </span>
+                          </div>
+                          <div className="flex-1 p-4 sm:p-5">
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              <span className={`chip ${STATUS_STYLE[a.status]?.className ?? ""}`}>{STATUS_STYLE[a.status]?.label ?? a.status}</span>
+                              {a.types.map((t) => (
+                                <span key={t} className="rounded-full bg-shallow/40 px-2.5 py-0.5 text-[13px] font-semibold text-deep">{TYPE_SHORT[t] ?? t}</span>
+                              ))}
+                            </div>
+                            <h3 className="mt-2 text-lg font-bold leading-snug group-hover:text-teal sm:text-xl">{a.name}</h3>
+                            <p className="mt-0.5 text-[15px] text-ink-soft">{Number(a.date.slice(0, 4)) - 1911}年｜{[a.location, a.slot].filter(Boolean).join("｜")}</p>
+                            {a.result ? <p className="mt-1 hidden text-sm text-teal sm:block">{a.result}</p> : null}
+                          </div>
+                          <Icon name="arrow" className="mr-5 hidden h-5 w-5 self-center text-teal sm:block" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              ))}
+          </div>
         ) : (
           <p className="mt-6 rounded-2xl border-2 border-dashed border-deep/15 p-8 text-center text-ink-soft">這個條件下目前沒有活動。</p>
         )

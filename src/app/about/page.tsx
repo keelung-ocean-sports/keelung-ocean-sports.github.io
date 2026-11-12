@@ -8,7 +8,7 @@ import { Photo } from "@/components/Photo";
 import { Callout, LineCta, PageHero, SectionTitle } from "@/components/ui";
 
 export const revalidate = 300;
-export const metadata: Metadata = { title: "關於我們", description: "基隆海洋運動俱樂部與基隆市潮境理海生態保育協會：人與海洋共存的公益海洋運動平台。" };
+export const metadata: Metadata = { title: "關於我們", description: "基隆海洋運動俱樂部與基隆市潮境理海生態保育協會：人與海洋共存的公益海洋運動平台。", alternates: { canonical: "/about/" } };
 
 export default async function AboutPage() {
   const c = await getContent();
@@ -19,7 +19,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageHero eyebrow="ABOUT US" title="關於我們" lead="一個從基隆外木山海岸出發、長期經營的公益海洋運動俱樂部。" />
+      <PageHero eyebrow="ABOUT US" title="關於我們" lead="一個從基隆外木山海岸出發、長期經營的公益海洋運動俱樂部。" image={teamPhoto ?? photo} />
 
       <section className="container-page grid gap-10 py-16 lg:grid-cols-2 lg:items-center">
         <div>

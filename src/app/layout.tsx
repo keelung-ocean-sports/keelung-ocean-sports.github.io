@@ -5,6 +5,7 @@ import { lineUrl } from "@/lib/view";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PreviewBanner } from "@/components/PreviewBanner";
+import { FloatingLine } from "@/components/FloatingLine";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -18,6 +19,8 @@ export const metadata: Metadata = {
     description: "SUP、浮潛、親子與共融海洋活動，從安全開始，一起去海邊運動。",
     locale: "zh_TW",
     type: "website",
+    siteName: "基隆海洋運動俱樂部",
+    images: [{ url: "/media/115/0704-pm-sup-action.jpg", width: 1920, alt: "外木山海域划立式划槳（SUP）的參與者" }],
   },
   robots: PREVIEW_MODE ? { index: false, follow: false } : undefined,
 };
@@ -41,6 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <SiteHeader lineUrl={lineUrl(c)} />
         <main id="main">{children}</main>
         <SiteFooter c={c} />
+        <FloatingLine url={lineUrl(c)} />
       </body>
     </html>
   );

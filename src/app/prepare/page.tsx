@@ -3,10 +3,12 @@ import { getContent } from "@/lib/cms";
 import { lineUrl, mediaByUsage } from "@/lib/view";
 import { Photo } from "@/components/Photo";
 import { PrepChecklist } from "@/components/PrepChecklist";
+import Link from "next/link";
+import { Icon } from "@/components/Icon";
 import { Callout, LineCta, PageHero, SectionTitle } from "@/components/ui";
 
 export const revalidate = 300;
-export const metadata: Metadata = { title: "行前準備", description: "海洋活動行前準備：服裝裝備、健康提醒、安全教育、科技體適能、海況與延期說明。" };
+export const metadata: Metadata = { title: "行前準備", description: "海洋活動行前準備：服裝裝備、健康提醒、安全教育、科技體適能、海況與延期說明。", alternates: { canonical: "/prepare/" } };
 
 const NOTICE_TYPES = [
   { t: "正常辦理", d: "依原定時間地點集合。" },
@@ -35,6 +37,14 @@ export default async function PreparePage() {
         </div>
         <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
           <PrepChecklist />
+          <div className="card p-5">
+            <p className="font-bold text-deep">出發前也看看</p>
+            <div className="mt-3 grid gap-2">
+              <Link href="/safety" className="btn-outline justify-between text-deep">海洋安全學院<Icon name="arrow" className="h-4 w-4" /></Link>
+              <Link href="/fitness" className="btn-outline justify-between text-deep">科技體適能流程<Icon name="arrow" className="h-4 w-4" /></Link>
+              <Link href="/activities" className="btn-outline justify-between text-deep">活動與正式報名<Icon name="arrow" className="h-4 w-4" /></Link>
+            </div>
+          </div>
           <LineCta url={lineUrl(c)} />
         </aside>
       </div>

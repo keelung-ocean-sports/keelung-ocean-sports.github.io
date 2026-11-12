@@ -31,12 +31,21 @@ export function PrepChecklist() {
       return next;
     });
   const n = checked.filter(Boolean).length;
+  const reset = () => {
+    const next = ITEMS.map(() => false);
+    setChecked(next);
+    try { localStorage.removeItem(KEY); } catch {}
+  };
   return (
     <div className="card p-6">
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-bold">我的出發前檢查</h3>
         <span className="text-sm font-bold text-teal">{n}／{ITEMS.length}</span>
       </div>
+      <div className="mt-3 h-2 overflow-hidden rounded-full bg-shallow/40" aria-hidden>
+        <div className="h-full rounded-full bg-teal transition-all" style={{ width: `${(n / ITEMS.length) * 100}%` }} />
+      </div>
+      {n === ITEMS.length ? <p className="mt-3 rounded-xl bg-emerald-50 p-3 text-[15px] font-semibold text-emerald-900" role="status">準備好了！出發前再看一次官方LINE的海況通知。</p> : null}
       <ul className="mt-4 space-y-2">
         {ITEMS.map((t, i) => (
           <li key={t}>
@@ -50,7 +59,8 @@ export function PrepChecklist() {
           </li>
         ))}
       </ul>
-      <p className="mt-4 text-sm text-ink-soft">勾選只存在你自己的瀏覽器，作為個人提醒，不會送出，也不代表完成任何正式任務。</p>
+      {n ? <button type="button" onClick={reset} className="mt-3 text-sm font-bold text-teal hover:text-deep">全部清除重來</button> : null}
+      <p className="mt-4 text-sm text-ink-soft">勾選只存在你自己的瀏覽器，作為個人提醒，不會送出，不等於正式報名，也不代表完成安全教育或安全審查。</p>
     </div>
   );
 }

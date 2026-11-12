@@ -6,7 +6,7 @@ import { Icon } from "@/components/Icon";
 import { PageHero } from "@/components/ui";
 
 export const revalidate = 300;
-export const metadata: Metadata = { title: "年度成果館", description: "基隆海洋運動俱樂部逐年活動紀錄、成果與 KPI。" };
+export const metadata: Metadata = { title: "年度成果館", description: "基隆海洋運動俱樂部逐年活動紀錄、成果與 KPI。", alternates: { canonical: "/results/" } };
 
 export default async function ResultsIndex() {
   const c = await getContent();

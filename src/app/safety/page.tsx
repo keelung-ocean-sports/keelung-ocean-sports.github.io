@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { getContent } from "@/lib/cms";
-import { link, mediaByUsage } from "@/lib/view";
+import { link, mediaByUsage, pickMedia } from "@/lib/view";
 import { Icon } from "@/components/Icon";
 import { Photo } from "@/components/Photo";
 import { SafetyQuiz } from "@/components/SafetyQuiz";
 import { Callout, PageHero, SectionTitle } from "@/components/ui";
 
 export const revalidate = 300;
-export const metadata: Metadata = { title: "海洋安全學院", description: "下水前準備、救生衣、風浪潮汐海流、Go／No-Go 決策與 10 題安全情境練習。" };
+export const metadata: Metadata = { title: "海洋安全學院", description: "下水前準備、救生衣、風浪潮汐海流、Go／No-Go 決策、救溺五步與 10 題安全情境練習。", alternates: { canonical: "/safety/" } };
 
 const TOPICS = [
   { t: "下水前安全準備", d: ["完成主辦單位指定的線上安全教育任務", "前一晚睡飽、不空腹也不過飽", "報到時接受科技體適能檢測，身體不適主動告知", "聽完岸上說明、確認集合點與活動範圍"] },
@@ -16,6 +16,14 @@ const TOPICS = [
   { t: "風浪、潮汐、海流與地形", d: ["晴天也可能有湧浪與強風", "漲退潮會改變水深、入水點與海流", "留意離岸流、礁岩、消波塊與船隻航道", "只在教練指定的範圍內活動"] },
   { t: "身體不適通報", d: ["頭暈、抽筋、寒冷發抖、胸悶，立即舉手示意", "抓住 SUP 板或浮具，靠救生衣漂浮等待", "教練與救生人員會協助回岸並評估"] },
   { t: "教練與救生人力", d: ["依參與人數、年齡、能力與活動類型配置教練與救生人力", "分組活動，教練掌握每組人數與位置", "共融與親子場次增加陪同人力"] },
+];
+
+const RESCUE = [
+  { k: "叫", t: "大聲呼救", d: "喊「有人溺水！」請周邊的人一起協助。", land: true },
+  { k: "叫", t: "撥打 119／118", d: "119 消防、118 海巡，說清楚地點與人數。", land: true },
+  { k: "伸", t: "伸出長物", d: "竹竿、繩子、浮板伸給對方，人留在岸上。", land: true },
+  { k: "拋", t: "拋出浮具", d: "寶特瓶、救生圈、冰桶等可漂浮物拋過去。", land: true },
+  { k: "划", t: "划船救援", d: "由受過訓練者利用船隻或浮具接近，未受訓者不下水。", land: false },
 ];
 
 const GONOGO = [
@@ -30,11 +38,12 @@ export default async function SafetyPage() {
   const c = await getContent();
   const goocean = link(c, "goocean_app");
   const quizForm = link(c, "form_safety_quiz_115");
-  const photos = mediaByUsage(c, "安全教育").slice(0, 3);
+  const hero = pickMedia(c, ["M115-0802-am-safety-briefing"])[0];
+  const photos = mediaByUsage(c, "安全教育").filter((m) => m.id !== hero?.id).slice(0, 4);
 
   return (
     <>
-      <PageHero eyebrow="OCEAN SAFETY ACADEMY" title="海洋安全學院" lead="海洋運動的第一堂課，是學會判斷什麼時候可以下水、什麼時候該停下來。" />
+      <PageHero eyebrow="OCEAN SAFETY ACADEMY" title="海洋安全學院" lead="海洋運動的第一堂課，是學會判斷什麼時候可以下水、什麼時候該停下來。" image={hero ?? photos[0]} />
 
       <section className="container-page py-14">
         <SectionTitle eyebrow="BASICS" title="六個必懂的安全重點" />
@@ -50,10 +59,24 @@ export default async function SafetyPage() {
           ))}
         </div>
         {photos.length ? (
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+          <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
             {photos.map((m) => <Photo key={m.id} m={m} caption className="aspect-[4/3] rounded-2xl" sizes="(max-width: 640px) 100vw, 33vw" />)}
           </div>
         ) : null}
+      </section>
+
+      <section className="container-page pb-14" aria-labelledby="rescue">
+        <SectionTitle id="rescue" eyebrow="RESCUE" title="救溺五步：叫、叫、伸、拋、划" lead="看到有人溺水，先在岸上做能做的事。沒有受過救生訓練，不要直接下水。" />
+        <ol className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          {RESCUE.map((r, i) => (
+            <li key={i} className={`rounded-2xl p-5 ring-1 ${r.land ? "bg-shallow-50 ring-teal/20" : "bg-amber-50 ring-amber-300"} ${i === 4 ? "col-span-2 sm:col-span-1" : ""}`}>
+              <span className="flex items-baseline gap-2"><span className="text-4xl font-black text-deep">{r.k}</span><span className="text-sm font-bold text-teal">步驟 {i + 1}</span></span>
+              <h3 className="mt-2 text-lg font-bold">{r.t}</h3>
+              <p className="mt-1 text-[15px] leading-7 text-ink-soft">{r.d}</p>
+              <p className={`mt-2 text-xs font-bold ${r.land ? "text-teal" : "text-amber-800"}`}>{r.land ? "岸上進行" : "限受訓人員"}</p>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <section className="bg-deep py-16 text-shallow">
