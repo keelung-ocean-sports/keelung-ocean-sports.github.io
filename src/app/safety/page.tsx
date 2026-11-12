@@ -38,6 +38,11 @@ export default async function SafetyPage() {
   const c = await getContent();
   const goocean = link(c, "goocean_app");
   const quizForm = link(c, "form_safety_quiz_115");
+  const videos = c.links.filter((l) => l.purpose === "安全影片" && l.url);
+  const embed = (u: string) => {
+    const m = u.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
+    return m ? `https://www.youtube-nocookie.com/embed/${m[1]}` : null;
+  };
   const hero = pickMedia(c, ["M115-0802-am-safety-briefing"])[0];
   const photos = mediaByUsage(c, "安全教育").filter((m) => m.id !== hero?.id).slice(0, 4);
 
@@ -113,6 +118,30 @@ export default async function SafetyPage() {
           </div>
         </div>
       </section>
+
+      {videos.length ? (
+        <section className="container-page pt-14" aria-labelledby="videos">
+          <SectionTitle id="videos" eyebrow="VIDEO" title="水域安全宣導影片" lead="115 年度正式安全教育任務中使用的宣導影片。建議出發前先和家人一起看完，再做下方的情境練習。" />
+          <div className="grid gap-6 md:grid-cols-3">
+            {videos.map((v) => {
+              const src = embed(v.url!);
+              return (
+                <figure key={v.id} className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-ink/10">
+                  {src ? (
+                    <div className="aspect-video bg-ink/5">
+                      <iframe src={src} title={v.name} loading="lazy" className="h-full w-full" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+                    </div>
+                  ) : null}
+                  <figcaption className="flex items-center justify-between gap-2 p-4 text-[15px] font-bold text-ink">
+                    {v.name}
+                    <a href={v.url!} target="_blank" rel="noopener noreferrer" className="shrink-0 text-sm font-normal text-teal underline">在 YouTube 開啟</a>
+                  </figcaption>
+                </figure>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
 
       <section className="container-page py-14" aria-labelledby="quiz">
         <SectionTitle id="quiz" eyebrow="PRACTICE" title="安全情境練習 10 題" lead="點選答案後立即看到解析。這是學習練習，不會記錄成績。" />
