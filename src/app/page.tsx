@@ -50,6 +50,7 @@ export default async function HomePage() {
   const mosaic = mediaByUsage(c, "年度精選").filter((m) => m.id !== hero?.id).slice(0, 5);
 
   const stats = [
+    { k: kpi("S08"), label: "總參加人次", note: "活動投保＋線上安全教育＋體適能評估＋活動後回饋" },
     { k: kpi("S01"), label: "實體活動名冊", note: "9 個活動日、15 個活動時段" },
     { k: kpi("S06") ?? { actual: "—", actualUnit: "人", target: "" }, label: "不重複參與者", note: "跨日期去重人數尚未確認" },
     { k: kpi("K10"), label: "科技體適能檢測", note: (k: string) => `下水前完成檢測｜目標 ${k} 人次` },
