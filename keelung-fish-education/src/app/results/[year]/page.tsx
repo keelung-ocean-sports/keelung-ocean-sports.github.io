@@ -21,10 +21,10 @@ export async function generateMetadata({ params }: { params: Promise<{ year: str
   const r = await getResults(year);
   const v = (m: string) => r.find((x) => x.metric === m);
   const img = await resolveImage("0919-group-banner");
-  return meta({ title: `${year}年度成果館`, description: `${year}年度食魚教育推廣計畫「${s.program115}」：${v("activities")?.value ?? ""}場活動、實際參與${v("participants")?.value ?? ""}人次、自製教材與校園教案各1式。`, path: `/results/${year}/`, image: img?.src });
+  return meta({ title: `${year}年度成果館`, description: `${year}年度食魚教育推廣計畫「${s.program115}」：體驗活動${v("experience")?.value ?? ""}場、校園課程${v("school")?.value ?? ""}場、教材與教案各1式。`, path: `/results/${year}/`, image: img?.src });
 }
 
-const TOC = [["overview", "成果數字"], ["timeline", "年度時間軸"], ["why", "計畫緣起"], ["path", "四大學習路徑"], ["school", "校園課程"], ["inclusive", "共融參與"], ["materials", "教材與教案"], ["partners", "合作網絡"], ["library", "圖鑑"], ["photos", "精選照片"], ["next", "延續方向"]];
+const TOC = [["overview", "成果數字"], ["timeline", "年度時間軸"], ["why", "計畫緣起"], ["path", "四大學習路徑"], ["school", "校園課程"], ["inclusive", "共融參與"], ["materials", "教材與教案"], ["partners", "在地單位"], ["library", "圖鑑"], ["photos", "精選照片"], ["next", "延續方向"]];
 
 export default async function Results({ params }: { params: Promise<{ year: string }> }) {
   const { year } = await params;
@@ -34,10 +34,8 @@ export default async function Results({ params }: { params: Promise<{ year: stri
   const acts = (await getActivities()).filter((a) => a.year === year);
   const cards = await activityCards(acts);
   const v = (m: string) => results.find((x) => x.metric === m);
-  const top = ["activities", "participants", "participantsRate", "material", "lessonPlan", "partners"].map(v).filter(Boolean);
+  const top = ["experience", "school", "participants", "material", "lessonPlan", "partners"].map(v).filter(Boolean);
   const stats = top.map((x) => ({ value: x!.value, unit: x!.unit, label: x!.label }));
-  const target = v("participants")?.target;
-  if (target) stats.splice(2, 0, { value: target, unit: "人次", label: "原定目標" });
   const sum = acts.reduce((t, a) => t + (a.participants ?? 0), 0);
   const mismatch = v("participants") && Number(v("participants")!.value) !== sum;
   const materials = await getMaterials();
@@ -77,19 +75,18 @@ export default async function Results({ params }: { params: Promise<{ year: stri
       </nav>
 
       <section id="overview" className="wrap py-12" aria-labelledby="h-ov">
-        <SectionHead id="h-ov" eyebrow="Results" title="成果數字" lead="核定目標與實際成果分開列示。實際參與人次為四場活動實到人數加總。" />
+        <SectionHead id="h-ov" eyebrow="Results" title="成果數字" />
         {mismatch ? <p role="alert" className="rounded-xl bg-coral-100 p-4 text-coral-600">實際參與人次與各場人數加總不一致，請管理者檢查試算表。</p> : <Stats items={stats} />}
         <div className="mt-10 overflow-x-auto">
-          <table className="w-full min-w-[560px] border-collapse text-left text-[15px]">
-            <caption className="mb-3 text-left text-lg font-bold text-abyss">核定指標對照</caption>
-            <thead><tr className="border-b-2 border-abyss/20 text-sm text-ink-soft"><th scope="col" className="py-2 pr-4">指標</th><th scope="col" className="py-2 pr-4">核定目標</th><th scope="col" className="py-2 pr-4">實際成果</th><th scope="col" className="py-2">說明</th></tr></thead>
+          <table className="w-full min-w-[320px] max-w-2xl border-collapse text-left text-[15px]">
+            <caption className="mb-3 text-left text-lg font-bold text-abyss">核定項目與執行成果</caption>
+            <thead><tr className="border-b-2 border-abyss/20 text-sm text-ink-soft"><th scope="col" className="py-2 pr-4">項目</th><th scope="col" className="py-2 pr-4">核定</th><th scope="col" className="py-2">成果</th></tr></thead>
             <tbody>
-              {results.filter((r) => r.metric !== "participantsRate").map((r) => (
+              {results.filter((r) => r.metric !== "participants").map((r) => (
                 <tr key={r.metric} className="border-b border-abyss/10 align-top">
                   <th scope="row" className="whitespace-nowrap py-3 pr-4 font-semibold text-abyss">{r.label}</th>
                   <td className="whitespace-nowrap py-3 pr-4 tabular-nums">{r.target ? `${r.target} ${r.unit}` : "—"}</td>
-                  <td className="whitespace-nowrap py-3 pr-4 font-bold tabular-nums text-abyss">{r.value ? `${r.value} ${r.unit}` : "—"}</td>
-                  <td className="py-3 text-ink-soft">{r.description}</td>
+                  <td className="whitespace-nowrap py-3 font-bold tabular-nums text-abyss">{r.value ? `${r.value} ${r.unit}` : "—"}</td>
                 </tr>
               ))}
             </tbody>
@@ -158,19 +155,19 @@ export default async function Results({ params }: { params: Promise<{ year: stri
           {[handbook, cardsPdf].filter(Boolean).map((m) => (
             <div key={m!.slug} className="card flex gap-4 p-5">
               {m!.previewImage && /* eslint-disable-next-line @next/next/no-img-element */ <img src={asset(m!.previewImage)} alt={`${m!.title} 封面`} width={96} height={136} loading="lazy" className="h-36 w-24 shrink-0 rounded-md object-cover ring-1 ring-abyss/10" />}
-              <div><p className="text-sm font-bold text-tide-600">自製教材 1 式</p><h3 className="mt-1 text-base">{m!.title}</h3><p className="text-sm text-ink-soft">{m!.printSize}</p><a href={asset(m!.pdfUrl)} target="_blank" rel="noopener" className="mt-2 inline-flex min-h-[44px] items-center gap-1 font-semibold"><Icon name="download" className="h-5 w-5" />PDF</a></div>
+              <div><p className="text-sm font-bold text-tide-600">教材 1 式</p><h3 className="mt-1 text-base">{m!.title}</h3><p className="text-sm text-ink-soft">{m!.printSize}</p><a href={asset(m!.pdfUrl)} target="_blank" rel="noopener" className="mt-2 inline-flex min-h-[44px] items-center gap-1 font-semibold"><Icon name="download" className="h-5 w-5" />PDF</a></div>
             </div>
           ))}
           {lesson && <div className="card flex gap-4 p-5">
             {lesson.previewImage && /* eslint-disable-next-line @next/next/no-img-element */ <img src={asset(lesson.previewImage)} alt={`${lesson.title} 封面`} width={96} height={136} loading="lazy" className="h-36 w-24 shrink-0 rounded-md object-cover ring-1 ring-abyss/10" />}
-            <div><p className="text-sm font-bold text-tide-600">校園教案 1 式</p><h3 className="mt-1 text-base">{v("lessonPlan")?.description}</h3><p className="text-sm text-ink-soft">{lesson.printSize}</p>{lesson.pdfUrl ? <a href={asset(lesson.pdfUrl)} target="_blank" rel="noopener" className="mt-2 inline-flex min-h-[44px] items-center gap-1 font-semibold"><Icon name="download" className="h-5 w-5" />PDF</a> : <Link href="/materials/#lesson-plan" className="mt-2 inline-flex min-h-[44px] items-center">看教案架構</Link>}</div>
+            <div><p className="text-sm font-bold text-tide-600">教案 1 式</p><h3 className="mt-1 text-base">{v("lessonPlan")?.description}</h3><p className="text-sm text-ink-soft">{lesson.printSize}</p>{lesson.pdfUrl ? <a href={asset(lesson.pdfUrl)} target="_blank" rel="noopener" className="mt-2 inline-flex min-h-[44px] items-center gap-1 font-semibold"><Icon name="download" className="h-5 w-5" />PDF</a> : <Link href="/materials/#lesson-plan" className="mt-2 inline-flex min-h-[44px] items-center">看教案架構</Link>}</div>
           </div>}
         </div>
       </section>
 
       <section id="partners" className="bg-harbor-50 py-12" aria-labelledby="h-pt">
         <div className="wrap">
-          <SectionHead id="h-pt" eyebrow="Partners" title={`合作網絡：${partners.length} 個單位`} />
+          <SectionHead id="h-pt" eyebrow="Partners" title={`整合在地單位：${partners.length} 個`} />
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {partners.map((p) => <li key={p.id} className="rounded-2xl bg-white p-5 ring-1 ring-abyss/10"><p className="text-sm font-bold text-tide-600">{p.role}</p><p className="mt-1 font-bold text-abyss">{p.name}</p><p className="mt-2 text-sm text-ink-soft">{p.description}</p></li>)}
           </ul>
@@ -191,7 +188,7 @@ export default async function Results({ params }: { params: Promise<{ year: stri
         <div className="wrap">
           <h2 id="h-next" className="text-2xl text-white">延續方向</h2>
           <ul className="mt-5 grid gap-3 sm:grid-cols-3">
-            {["教案由德和國小承接，後續可在校內自行運用。", "任務圖卡與學習手冊公開下載，家長、老師與社區單位都可以使用。", "海味與漁法圖鑑持續增加；新年度活動與成果加在同一個網站。"].map((x) => <li key={x} className="rounded-2xl bg-white/10 p-5">{x}</li>)}
+            {["教案由德和國小承接，後續可在校內自行運用。", "任務圖卡與學習手冊公開下載，家長、老師與社區單位都可以使用。", "海味與漁法圖鑑持續擴充，延續八斗子的食魚教育。"].map((x) => <li key={x} className="rounded-2xl bg-white/10 p-5">{x}</li>)}
           </ul>
           <p className="mt-6 text-sm text-white/75">{s.fundingNote}</p>
           <div className="mt-6 inline-block rounded-2xl bg-white p-3"><Share title={`${year}年度成果館｜潮境共學`} /></div>

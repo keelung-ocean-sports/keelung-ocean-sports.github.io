@@ -8,7 +8,7 @@ id,src,alt,caption,activitySlug,stop,featured,published,order
 0816-dishes-table,0816-dishes-table,料理台上擺滿鯖魚、鎖管、番茄炒蛋等料理，孩子湊近準備試吃,完成的海味餐桌,2026-0816-fish-experience,table,TRUE,TRUE,7
 0816-kitchen-wide,0816-kitchen-wide,生態廚房全景，參與家庭坐在講師前方，料理台上擺滿蔬菜食材,國立海洋科技博物館生態廚房,2026-0816-fish-experience,table,FALSE,TRUE,8
 0919-harbor-walk,0919-harbor-walk,孩子與家長沿著八斗子漁港碼頭行走，旁邊停滿掛著集魚燈的漁船,沿著八斗子漁港碼頭走，抬頭就是一整排集魚燈,2026-0919-dehe-school,harbor,TRUE,TRUE,1
-0919-harbor-gather,0919-harbor-gather,學生與家長聚集在漁船旁，聽漁人說明,在漁船旁集合，先聽漁人說,2026-0919-dehe-school,harbor,FALSE,TRUE,2
+0919-harbor-gather,0919-harbor-gather,學生與家長聚集在漁船旁，聽漁人說明,在漁船旁集合，聽漁人解說,2026-0919-dehe-school,harbor,FALSE,TRUE,2
 0919-fisher-gear,0919-fisher-gear,漁人站在漁船甲板上指著船上的設備，學生在岸邊抬頭觀看,漁人指出船上的作業設備,2026-0919-dehe-school,harbor,FALSE,TRUE,3
 0919-squid-boat,0919-squid-boat,參與者圍在掛滿集魚燈的漁船前，漁人在船邊解說,集魚燈下的解說,2026-0919-dehe-school,harbor,FALSE,TRUE,4
 0919-fisher-talk,0919-fisher-talk,漁人在八斗子漁港碼頭向學生解說，背後是漁船和山壁,八斗子的山與港，就是今天的教室,2026-0919-dehe-school,harbor,TRUE,TRUE,5
@@ -18,7 +18,7 @@ id,src,alt,caption,activitySlug,stop,featured,published,order
 0919-family-cook,0919-family-cook,家長在爐台前備料，孩子在旁觀看,親子一起備料、下鍋,2026-0919-dehe-school,table,FALSE,TRUE,9
 0919-kitchen-table,0919-kitchen-table,生態廚房料理台與參與者實作情形,生態廚房實作,2026-0919-dehe-school,table,FALSE,TRUE,10
 0926-fisher-talk,0926-fisher-talk,漁人站在藍色漁船旁向參與者說明,漁人在船邊說明作業方式,2026-0926-fish-experience,harbor,FALSE,TRUE,1
-0926-fisher-point,0926-fisher-point,漁人在碼頭邊指向漁船，參與者拿手機拍照,「你看那艘船——」,2026-0926-fish-experience,harbor,FALSE,TRUE,2
+0926-fisher-point,0926-fisher-point,漁人在碼頭邊指向漁船，參與者拿手機拍照,漁人指著漁船說明,2026-0926-fish-experience,harbor,FALSE,TRUE,2
 0926-harpoon-bow,0926-harpoon-bow,漁人站在漁船船首平台上,漁人登上船首平台,2026-0926-fish-experience,harbor,FALSE,TRUE,3
 0926-harpoon-demo,0926-harpoon-demo,漁人站在船首平台上手持長桿示範，背景是藍天與山,船首平台上的示範,2026-0926-fish-experience,harbor,TRUE,TRUE,4
 0926-kitchen-intro,0926-kitchen-intro,講師在生態廚房螢幕前說明，參與者坐在前方,回到生態廚房，講師開場,2026-0926-fish-experience,table,FALSE,TRUE,5
@@ -39,7 +39,7 @@ id,src,alt,caption,activitySlug,stop,featured,published,order
 0816-kitchen-seated,0816-kitchen-seated,親子坐在生態廚房裡，聽講師在擺滿食材的料理台前說明,坐下來，先聽今天的食材從哪裡來,2026-0816-fish-experience,table,FALSE,TRUE,10
 0816-chef-demo,0816-chef-demo,講師在料理台前手拿魚貨說明，參與者圍坐聆聽,講師拿著魚，說明怎麼處理,2026-0816-fish-experience,table,FALSE,TRUE,11
 0816-girl-stirfry,0816-girl-stirfry,孩子拿木鏟翻炒鎖管，身旁大人準備調味,孩子親手翻炒鎖管,2026-0816-fish-experience,table,FALSE,TRUE,12
-0816-market,1017-market-stall,參與者在八斗子市場魚攤前觀察魚貨,八斗子市場：先看今天有什麼魚（照片攝於10/17同一市場）,2026-0816-fish-experience,market,FALSE,TRUE,0
+0816-market,1017-market-stall,參與者在八斗子市場魚攤前觀察魚貨,八斗子市場魚攤（10/17 拍攝）,2026-0816-fish-experience,market,FALSE,TRUE,0
 0926-harbor-crowd,0926-harbor-crowd,參與者在碼頭邊抬頭看漁人在船首平台上持長桿示範，旁邊是掛滿集魚燈的漁船,碼頭邊抬頭看船首示範,2026-0926-fish-experience,harbor,TRUE,TRUE,10
 0926-squid-show,0926-squid-show,講師在國立海洋科技博物館生態廚房舉起一隻鎖管說明,講師舉起鎖管：這就是今天的主角之一,2026-0926-fish-experience,table,FALSE,TRUE,11
 0926-auction-board,0926-auction-board,白板上寫著四組的出價紀錄,廚房裡的模擬拍賣：四組各有預算，競標今天的食材,2026-0926-fish-experience,table,FALSE,TRUE,12
@@ -59,4 +59,4 @@ tide-guide-shell,tide-guide-shell,帶領者手上拿著小生物給參與者看,
 tide-pool-crouch,tide-pool-crouch,參與者蹲在潮池邊觀察,在潮池邊蹲低，慢慢看,2026-1017-inclusive,tide,TRUE,TRUE,3
 tide-circle,tide-circle,參與者圍成一圈聽帶領者說明,潮間帶上的小組說明,2026-0816-fish-experience,tide,FALSE,TRUE,4
 tide-pool-measure,tide-pool-measure,參與者在潮池旁觀察與紀錄,觀察與紀錄,2026-0926-fish-experience,tide,FALSE,TRUE,5
-tide-buoy,tide-buoy,參與者圍在一顆長滿附著生物的漂流浮球旁拍照觀察,海岸上的漂流浮球，也是一堂課,2026-1017-inclusive,tide,FALSE,TRUE,6
+tide-buoy,tide-buoy,參與者圍在一顆長滿附著生物的漂流浮球旁拍照觀察,觀察漂流浮球上的附著生物,2026-1017-inclusive,tide,FALSE,TRUE,6

@@ -17,7 +17,7 @@ export default async function About() {
         <div className="space-y-5 text-[17px]">
           <h2 className="text-2xl">一個長期的基隆食魚教育平台</h2>
           <p>「潮境共學」由{s.org}經營。我們把八斗子的市場、漁港、潮間帶和生態廚房，當成認識海洋與食物的教室。</p>
-          <p>這個網站會一直累積：每年的活動、新的魚種與漁法、新的教材，還有每一年的成果。115年度是第一個完整年度。</p>
+          <p>網站將持續累積每年的活動紀錄、海味與漁法圖鑑、教材及年度成果，115年度為第一年。</p>
           <h2 className="pt-4 text-2xl">我們相信</h2>
           <ul className="list-disc space-y-1 pl-6">
             <li>認識一條魚，從看見它開始。</li>

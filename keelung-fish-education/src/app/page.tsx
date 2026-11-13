@@ -29,8 +29,8 @@ export default async function Home() {
   const partners = await getPartners();
   const methods = await getMethods();
 
-  const stats = ["activities", "participants", "material", "lessonPlan", "partners"].map((m) => r(m)).filter(Boolean).map((x) => ({
-    value: x!.value, unit: x!.unit, label: ({ activities: "年度活動", participants: "實際參與", material: "任務教材", lessonPlan: "校園教案", partners: "合作夥伴" } as Record<string, string>)[x!.metric] ?? x!.label,
+  const stats = ["experience", "school", "participants", "material", "lessonPlan", "partners"].map((m) => r(m)).filter(Boolean).map((x) => ({
+    value: x!.value, unit: x!.unit, label: x!.label,
   }));
 
   return (
@@ -82,7 +82,7 @@ export default async function Home() {
         <div className="grid gap-6 lg:grid-cols-3">
           <EntryCard href="/species/" eyebrow="海味圖鑑" title="今天市場有什麼魚？" text={`${species.map((x) => x.name).join("、")}……認識八斗子常見的海味。`} img={speciesImgs[0]} />
           <EntryCard href="/fishing-methods/" eyebrow="漁法圖鑑" title="這條魚是怎麼被捕到的？" text={`${methods.map((m) => m.name).join("、")}，同一種魚，不同捕法。`} img={methodImg} />
-          <EntryCard href="/missions/" eyebrow="親子任務" title="成為八斗子海味小偵探" text="手機打開就能玩的四關任務，完成拿數位完成卡。" img={missionImg} />
+          <EntryCard href="/missions/" eyebrow="親子任務" title="成為八斗子海味小偵探" text="用手機就能玩的四關任務，完成後可領取數位完成卡。" img={missionImg} />
         </div>
       </section>
 
@@ -130,7 +130,7 @@ export default async function Home() {
 
       {/* 11. 合作網絡 */}
       <section className="wrap py-16" aria-labelledby="h-pt">
-        <SectionHead id="h-pt" eyebrow="合作網絡" title="一起把海味帶上桌的夥伴" action={{ href: "/partners/", label: "合作夥伴" }} />
+        <SectionHead id="h-pt" eyebrow="在地單位" title="一起把海味帶上桌的夥伴" action={{ href: "/partners/", label: "合作夥伴" }} />
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {partners.map((p) => (
             <li key={p.id} className="rounded-2xl bg-harbor-50 p-4">

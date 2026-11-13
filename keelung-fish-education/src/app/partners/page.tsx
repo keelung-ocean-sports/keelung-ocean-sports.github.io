@@ -9,7 +9,7 @@ export default async function Partners() {
   const list = await getPartners();
   return (
     <>
-      <PageHero eyebrow="Partners" title="合作夥伴" lead="學術、學校、社區與共融支持，各自負責自己最擅長的部分。" img={await resolveImage("0926-fisher-point")} />
+      <PageHero eyebrow="Partners" title="合作夥伴" lead="學術、學校、社區與共融支持單位，一起推動八斗子的食魚教育。" img={await resolveImage("0926-fisher-point")} />
       <Crumbs items={[{ label: "合作夥伴" }]} />
       <ul className="wrap grid gap-5 py-10 sm:grid-cols-2 lg:grid-cols-3">
         {list.map((p) => (
@@ -21,7 +21,6 @@ export default async function Partners() {
           </li>
         ))}
       </ul>
-      <p className="wrap text-sm text-ink-soft">合作單位名稱與角色依115年度核定計畫書。</p>
     </>
   );
 }

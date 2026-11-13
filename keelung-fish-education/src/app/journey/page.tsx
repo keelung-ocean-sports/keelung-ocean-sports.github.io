@@ -69,7 +69,7 @@ export default async function Journey() {
                 {d.note && <p className="mt-4 rounded-xl border-l-4 border-tide-600 bg-tide-100/50 p-4 text-[15px]">{d.note}</p>}
                 <div className="mt-6 flex flex-wrap gap-2">{d.links.map((l) => <Link key={l.href + l.label} href={l.href} className="btn-line text-sm">{l.label}</Link>)}</div>
               </div>
-              <div>{photos[k].length ? <Gallery images={photos[k].slice(0, 6)} label={`${s.name}照片`} /> : <p className="rounded-2xl bg-white p-8 text-ink-soft ring-1 ring-abyss/10">{k === "market" ? "市場站的紀錄照片收錄在 10/17 共融場活動頁。" : ""}</p>}</div>
+              <div>{photos[k].length ? <Gallery images={photos[k].slice(0, 6)} label={`${s.name}照片`} /> : <p className="rounded-2xl bg-white p-8 text-ink-soft ring-1 ring-abyss/10"></p>}</div>
             </div>
           </section>
         );

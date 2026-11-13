@@ -48,7 +48,6 @@ export default async function Inclusive() {
             <ul className="mt-3 space-y-2 text-[15px]">
               <li>報名時了解的需求（溝通方式、移動、是否需陪伴、是否需休息），只用於課程支持與場域安排，不涉及醫療診斷或障別鑑定。</li>
               <li>網站不公開任何參與者的障別、健康資訊、身分證明或保險資料。</li>
-              <li>報名與保險資料存放在私人表單，網站不讀取。</li>
             </ul>
           </div>
         </div>

@@ -9,7 +9,7 @@ export async function generateMetadata() {
 
 const GROUPS = [
   { key: "親子一起玩", id: "family", lead: "週末帶孩子去八斗子，或在家先玩一輪。" },
-  { key: "老師帶著教", id: "teachers", lead: "校園課程可以直接使用的教案架構與學習單。" },
+  { key: "老師帶著教", id: "teachers", lead: "可直接用於校園課程的教案與學習單。" },
   { key: "活動現場用", id: "field", lead: "帶領者在市場、漁港、潮間帶、廚房用的任務圖卡。" },
 ];
 const LESSON = [

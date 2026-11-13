@@ -25,7 +25,7 @@ export async function SiteFooter() {
         <nav aria-label="更多內容">
           <ul className="space-y-2 text-sm">
             {MORE.map((n) => <li key={n.href}><Link href={n.href} className="text-white/85 no-underline hover:text-white hover:underline">{n.label}</Link></li>)}
-            {s.orgSite && <li><a href={s.orgSite} className="text-white/85 hover:text-white">協會：基隆海洋運動俱樂部網站</a></li>}
+            {s.orgSite && <li><a href={s.orgSite} className="text-white/85 hover:text-white">基隆海洋運動俱樂部</a></li>}
           </ul>
         </nav>
       </div>

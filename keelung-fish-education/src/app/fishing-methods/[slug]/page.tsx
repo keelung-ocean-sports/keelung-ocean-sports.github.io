@@ -31,7 +31,7 @@ export default async function MethodDetail({ params }: { params: Promise<{ slug:
       <article className="wrap grid gap-10 py-8 lg:grid-cols-[1.1fr_1fr]">
         <div>
           <Photo img={cover} priority sizes="(min-width:1024px) 55vw, 100vw" className="aspect-[4/3] w-full" />
-          {cover?.caption && <p className="mt-2 text-sm text-ink-soft">照片：{cover.caption}（八斗子漁港實景，非特定漁法示意）</p>}
+          {cover?.caption && <p className="mt-2 text-sm text-ink-soft">{cover.caption}</p>}
           {gallery.length > 0 && <div className="mt-6"><Gallery images={gallery} label="漁港照片" /></div>}
         </div>
         <div>

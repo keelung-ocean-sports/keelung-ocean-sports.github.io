@@ -64,7 +64,7 @@ export default async function ActivityDetail({ params }: { params: Promise<{ slu
         <section className="bg-harbor-50 py-10" aria-labelledby="h-path">
           <div className="wrap">
             <h2 id="h-path" className="mb-2 text-xl">當日學習路徑</h2>
-            <p className="mb-5 text-sm text-ink-soft">亮起的站為本場照片與紀錄中有安排的場域。</p>
+            <p className="mb-5 text-sm text-ink-soft">亮起的是本場走過的學習站。</p>
             <JourneyStrip highlight={a.stops as StopKey[]} />
           </div>
         </section>
@@ -77,7 +77,7 @@ export default async function ActivityDetail({ params }: { params: Promise<{ slu
               <div className="mt-8 rounded-2xl bg-tide-100/60 p-6">
                 <h3 className="text-lg">本場的共融學習設計</h3>
                 <ul className="mt-3 grid gap-2 sm:grid-cols-2">{INCLUSIVE.map((x) => <li key={x} className="flex gap-2"><Icon name="check" className="mt-1 h-5 w-5 shrink-0 text-tide-600" />{x}</li>)}</ul>
-                <p className="mt-4 text-sm text-ink-soft">本網站不公開任何參與者的個人障別或健康資訊。<Link href="/inclusive/">了解共融食魚教育</Link></p>
+                <p className="mt-4 text-sm"><Link href="/inclusive/">了解共融食魚教育</Link></p>
               </div>
             )}
           </section>
