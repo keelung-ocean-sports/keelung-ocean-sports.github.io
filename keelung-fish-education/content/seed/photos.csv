@@ -48,6 +48,11 @@ id,src,alt,caption,activitySlug,stop,featured,published,order
 0926-kid-wash-fish,0926-kid-wash-fish,孩子在水槽中清洗魚，家長在旁處理食材,孩子親手清洗魚,2026-0926-fish-experience,table,TRUE,TRUE,15
 0926-cook-trio,0926-cook-trio,三位參與者在料理台前備料下鍋,一起顧鍋、一起備料,2026-0926-fish-experience,table,FALSE,TRUE,16
 0926-dishes2,0926-dishes2,料理台上擺著烤魚、鹽烤蝦、汆燙鎖管等完成的料理,9/26 完成的海味料理,2026-0926-fish-experience,table,FALSE,TRUE,17
+sp-squid,sp-squid,講師在生態廚房舉起一隻完整的鎖管，可以看到細長的身體和觸腕,完整的鎖管：細長身體、兩片鰭、長長的觸腕（9/26 生態廚房）,,,FALSE,TRUE,90
+sp-hairtail,sp-hairtail,切段的白帶魚放在料理紙上，銀色表皮和頭部清楚可見,切段的白帶魚：銀亮的表皮是新鮮的線索（10/17 生態廚房）,,,FALSE,TRUE,91
+sp-mackerel,sp-mackerel,一整尾烤好的鯖魚放在料理紙上，背部可見青色波浪紋,烤好的整尾鯖魚（8/16 生態廚房）,,,FALSE,TRUE,92
+sp-shrimp,sp-shrimp,一盤烤得橘紅的蝦，可以看到長觸角和分節的身體,鹽烤蝦：數數看有幾對腳（9/26 生態廚房）,,,FALSE,TRUE,93
+sp-shellfish,sp-shellfish,不鏽鋼盆裡泡水吐沙的蛤蜊，旁邊是砧板上的薑,泡水吐沙中的蛤蜊（10/17 生態廚房）,,,FALSE,TRUE,94
 tide-group-explore,tide-group-explore,一群參與者在礁岩海岸上分散觀察,潮間帶觀察,2026-0816-fish-experience,tide,TRUE,TRUE,1
 tide-guide-shell,tide-guide-shell,帶領者手上拿著小生物給參與者看,近距離看一看，看完放回原處,2026-0926-fish-experience,tide,FALSE,TRUE,2
 tide-pool-crouch,tide-pool-crouch,參與者蹲在潮池邊觀察,在潮池邊蹲低，慢慢看,2026-1017-inclusive,tide,TRUE,TRUE,3
