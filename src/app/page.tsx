@@ -50,8 +50,8 @@ export default async function HomePage() {
   const mosaic = mediaByUsage(c, "年度精選").filter((m) => m.id !== hero?.id).slice(0, 5);
 
   const stats = [
-    { k: kpi("S01"), label: "實體活動名冊", note: "10 個活動日、17 個時段" },
-    { k: kpi("S06"), label: "不重複參與者", note: "跨日期去除重複後的實際人數" },
+    { k: kpi("S01"), label: "實體活動投保人次", note: "9 個投保活動日；另有 3 場培訓" },
+    { k: kpi("S07"), label: "官方LINE累積好友", note: "依協會提供截圖；不計入活動人次" },
     { k: kpi("K10"), label: "科技體適能檢測", note: (k: string) => `下水前完成檢測｜目標 ${k} 人次` },
     { k: kpi("S02"), label: "線上安全教育", note: "223 份作答，去重後計次" },
     { k: kpi("S04"), label: "整體滿意度", note: "96 份活動後回饋，滿分 5 分" },
@@ -275,7 +275,7 @@ export default async function HomePage() {
                   <div className="h-full rounded-full bg-gradient-to-r from-shallow to-sand" style={{ width: "100%" }} />
                 </div>
                 <p className="mt-3 text-[15px] text-white/85">目標 {k01.target} 人次｜達成率 <b className="text-sand">{achievement(k01.target, k01.actual)}</b></p>
-                <p className="mt-2 text-sm text-white/70">＝實體活動名冊 473 人次＋線上安全教育 203 人次。「人次」是完成任務的次數，不等於實際人數。</p>
+                <p className="mt-2 text-sm text-white/70">＝實體活動投保 {kpi("S01")?.actual} 人次＋線上安全教育 {kpi("S02")?.actual} 人次。「人次」是完成任務的次數，不等於實際人數。</p>
               </div>
               <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
                 {stats.map((s) => (

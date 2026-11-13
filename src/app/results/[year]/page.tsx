@@ -100,7 +100,7 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
   ].sort((a, b) => a.date.localeCompare(b.date));
   const kindCount = (["水域活動", "共融", "競賽", "培訓"] as const).map((k) => ({ k, n: timeline.filter((t) => t.kind === k).length })).filter((x) => x.n);
   const heroPhoto = mediaByUsage(c, "成果館主視覺").find((m) => m.year === year) ?? featured[0];
-  const keyNums = ["K01", "S01", "S02", "S06", "K10", "S04"].map(kpi).filter((k): k is NonNullable<typeof k> => !!k && !!k.actual);
+  const keyNums = ["K01", "S01", "S02", "S07", "K10", "S04"].map(kpi).filter((k): k is NonNullable<typeof k> => !!k && !!k.actual);
   const highlightActs = acts.filter((a) => a.coverId).sort((a, b) => Number(b.headcount || 0) - Number(a.headcount || 0)).slice(0, 3).sort((a, b) => a.date.localeCompare(b.date));
 
   const rosterDays = acts.filter((a) => a.headcount);
@@ -232,8 +232,8 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           {rosterDays.length ? (
             <div className="card p-6">
-              <h3 className="text-lg font-bold">各活動日保險名冊人次</h3>
-              <p className="text-sm text-ink-soft">同一人同一天只計一次；上下午共用日名冊。</p>
+              <h3 className="text-lg font-bold">各活動日個人保險投保人次</h3>
+              <p className="text-sm text-ink-soft">依個人保單投保人數彙總；上下午共用日統計，不加倍計算。</p>
               <div className="mt-4 space-y-3">
                 {rosterDays.map((a) => (
                   <Link key={a.id} href={`/activities/${a.id}`} className="block rounded-lg transition hover:bg-shallow-50">
@@ -246,12 +246,12 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
           ) : null}
           {kindCount.length ? (
             <div className="card p-6">
-              <h3 className="text-lg font-bold">活動類型場次比較</h3>
-              <p className="text-sm text-ink-soft">依活動主要類型歸類；同日上下午分別計場。</p>
+              <h3 className="text-lg font-bold">活動日期類型比較</h3>
+              <p className="text-sm text-ink-soft">依每個活動日期的主要類型歸類；此圖以日期計數，上下午不拆分。</p>
               <div className="mt-4 space-y-3">
-                {kindCount.map((x) => <Bar key={x.k} label={x.k} value={x.n} max={Math.max(...kindCount.map((k) => k.n))} suffix=" 場" />)}
+                {kindCount.map((x) => <Bar key={x.k} label={x.k} value={x.n} max={Math.max(...kindCount.map((k) => k.n))} suffix=" 日" />)}
               </div>
-              <p className="mt-4 border-t border-deep/10 pt-3 text-right font-black text-deep">共 {acts.length} 場</p>
+              <p className="mt-4 border-t border-deep/10 pt-3 text-right font-black text-deep">共 {acts.length} 個活動日期（含培訓）</p>
             </div>
           ) : null}
         </div>
@@ -315,7 +315,7 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
                 {["K07", "K08", "K05"].map(kpi).filter(Boolean).map((k) => (
                   <li key={k!.id} className="flex items-start justify-between gap-3">
                     <span className="font-semibold text-deep">{k!.name}<span className="block text-xs font-normal text-ink-soft">目標 {k!.target} {k!.targetUnit}</span></span>
-                    <span className={`chip shrink-0 text-xs ${k!.confirm === "協會確認達標" || k!.confirm === "已列報" ? "bg-emerald-50 text-emerald-800 ring-emerald-300" : "bg-amber-50 text-amber-900 ring-amber-300"}`}>{k!.confirm === "協會確認達標" ? "協會確認達標" : k!.confirm}</span>
+                    <span className={`chip shrink-0 text-xs ${k!.confirm === "協會確認達標" || k!.confirm === "已列報" ? "bg-emerald-50 text-emerald-800 ring-emerald-300" : "bg-amber-50 text-amber-900 ring-amber-300"}`}>{k!.confirm === "待確認" ? "核定目標" : k!.confirm}</span>
                   </li>
                 ))}
               </ul>
@@ -432,7 +432,7 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
               {[
                 "年度任務人次 ＝ 實體活動保險名冊人次 ＋ 線上安全教育任務人次，兩者性質不同、分別計次。",
                 "人次不等於不重複人數；同一人參加不同日期，分別計次。",
-                "保險名冊同日證號去重；上下午共用日名冊，同一天只計一次。",
+                "投保人次依9個日期、11張個人保單彙總；保單及收據不重複計，上下午不重複加倍。",
                 "線上安全測驗以姓名及手機末三碼辨識重複作答，家長合填不另拆計。",
                 "報名意願登記、滿意度問卷、原始測驗份數，均不加入年度人次。",
                 "趣味競賽人次已含於名冊合計；專業培訓與體適能另列專項，不再加計。",
