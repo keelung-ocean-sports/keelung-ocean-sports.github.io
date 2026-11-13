@@ -98,9 +98,15 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
       };
     }),
   ].sort((a, b) => a.date.localeCompare(b.date));
-  const kindCount = (["水域活動", "共融", "競賽", "培訓"] as const).map((k) => ({ k, n: timeline.filter((t) => t.kind === k).length })).filter((x) => x.n);
+  const kindCount = (["水域活動", "共融", "競賽", "培訓"] as const).map((k) => ({
+    k,
+    n: acts.filter((a) => kindOf(a.types) === k).reduce((n, a) => n + (k !== "競賽" && k !== "培訓" && a.slot.includes("上午") && a.slot.includes("下午") ? 2 : 1), 0),
+  })).filter((x) => x.n);
   const heroPhoto = mediaByUsage(c, "成果館主視覺").find((m) => m.year === year) ?? featured[0];
-  const keyNums = ["K01", "S01", "S02", "S07", "K10", "S04"].map(kpi).filter((k): k is NonNullable<typeof k> => !!k && !!k.actual);
+  // Keep the original six summary cards; unknown unique attendance is not estimated.
+  const keyNums = ["K01", "S01", "S02", "S06", "K10", "S04"].map((id) =>
+    kpi(id) ?? (id === "S06" && kpi("S01") ? { ...kpi("S01")!, id, name: "不重複參與者", actual: "—", actualUnit: "人", target: "", actualNote: "跨日期去重人數尚未確認" } : undefined)
+  ).filter((k): k is NonNullable<typeof k> => !!k && !!k.actual);
   // Preserve the original editorial photo selection when attendance data changes.
   const originalHighlights = ["A115-0719", "A115-0802", "A115-1004"];
   const highlightActs = year === "115"
@@ -236,7 +242,7 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           {rosterDays.length ? (
             <div className="card p-6">
-              <h3 className="text-lg font-bold">各活動日個人保險投保人次</h3>
+              <h3 className="text-lg font-bold">各活動日保險名冊人次</h3>
               <p className="text-sm text-ink-soft">依個人保單投保人數彙總；上下午共用日統計，不加倍計算。</p>
               <div className="mt-4 space-y-3">
                 {rosterDays.map((a) => (
@@ -250,12 +256,12 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
           ) : null}
           {kindCount.length ? (
             <div className="card p-6">
-              <h3 className="text-lg font-bold">活動日期類型比較</h3>
-              <p className="text-sm text-ink-soft">依每個活動日期的主要類型歸類；此圖以日期計數，上下午不拆分。</p>
+              <h3 className="text-lg font-bold">活動類型場次比較</h3>
+              <p className="text-sm text-ink-soft">同日上下午分別計場；競賽全天計1場，培訓按日期計場。</p>
               <div className="mt-4 space-y-3">
-                {kindCount.map((x) => <Bar key={x.k} label={x.k} value={x.n} max={Math.max(...kindCount.map((k) => k.n))} suffix=" 日" />)}
+                {kindCount.map((x) => <Bar key={x.k} label={x.k} value={x.n} max={Math.max(...kindCount.map((k) => k.n))} suffix=" 場" />)}
               </div>
-              <p className="mt-4 border-t border-deep/10 pt-3 text-right font-black text-deep">共 {acts.length} 個活動日期（含培訓）</p>
+              <p className="mt-4 border-t border-deep/10 pt-3 text-right font-black text-deep">共 {kindCount.reduce((n, x) => n + x.n, 0)} 場</p>
             </div>
           ) : null}
         </div>

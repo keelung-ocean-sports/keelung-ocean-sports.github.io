@@ -48,11 +48,11 @@ function status(k: KpiLite) {
 
 export function KpiDashboard({ items }: { items: KpiLite[] }) {
   const [open, setOpen] = useState<string | null>(null);
-
+  const reached = items.filter((k) => status(k).reached).length;
   return (
     <div>
       <p className="mb-4 flex flex-wrap items-center gap-2 text-[15px] text-ink-soft">
-        <span className="chip bg-emerald-50 text-emerald-800 ring-emerald-300">{items.length} 項計畫指標</span>
+        <span className="chip bg-emerald-50 text-emerald-800 ring-emerald-300">已達標 {reached}／{items.length} 項</span>
         點選任一項目，可展開計算方法、執行方式、相關活動與照片。
       </p>
       <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
