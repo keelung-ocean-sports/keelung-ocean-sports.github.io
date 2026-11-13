@@ -37,11 +37,34 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            keelung-fish-education/package-lock.json
       - run: npm ci
       - name: 內容檢核（結果顯示在本次執行的 Summary）
         run: npm run content-report
       - name: 建置靜態網站
         run: npm run build:static
+      # ── 潮境共學｜基隆食魚教育（子網站：/keelung-fish-education/）──
+      - name: 食魚教育網站：安裝
+        working-directory: keelung-fish-education
+        run: npm ci
+      - name: 食魚教育網站：內容檢核（結果顯示在本次執行的 Summary）
+        working-directory: keelung-fish-education
+        env:
+          FISH_SHEET_ID: ${{ vars.FISH_SHEET_ID || '' }}
+        run: npm run content-report
+      - name: 食魚教育網站：建置
+        working-directory: keelung-fish-education
+        env:
+          FISH_SHEET_ID: ${{ vars.FISH_SHEET_ID || '' }}
+          NEXT_PUBLIC_BASE_PATH: /keelung-fish-education
+        run: npm run build
+      - name: 合併兩個網站
+        run: |
+          rm -rf out/keelung-fish-education
+          cp -r keelung-fish-education/out out/keelung-fish-education
+          test -f out/keelung-fish-education/index.html
       - run: touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -72,7 +95,7 @@ jobs:
         run: |
           sleep 20
           base="https://${{ github.repository_owner }}.github.io"
-          for p in / /activities/ /results/115/ /media/115/0816-training-sup-group.jpg; do
+          for p in / /activities/ /results/115/ /media/115/0816-training-sup-group.jpg /keelung-fish-education/ /keelung-fish-education/results/115/ /keelung-fish-education/missions/ /keelung-fish-education/downloads/bdz-fish-handbook-a5-16p.pdf; do
             code=$(curl -s -o /dev/null -w '%{http_code}' "$base$p")
             echo "$p → $code"
             [ "$code" = "200" ] || exit 1

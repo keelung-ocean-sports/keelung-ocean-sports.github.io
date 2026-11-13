@@ -1,0 +1,10 @@
+id,slug,title,audience,category,description,pdfUrl,previewImage,printSize,pages,version,updatedAt,published,order
+m-01,bdz-fish-handbook,《八斗子食魚探索任務圖卡與學習手冊》學習手冊,親子・一般民眾・共融參與者,親子一起玩,16 頁任務型學習手冊：海味小偵探護照、四站路線、市場／漁港／潮間帶／生態廚房四個任務、最終挑戰與帶回家任務。可以用說、畫、勾、指、貼完成。,/downloads/bdz-fish-handbook-a5-16p.pdf,/downloads/hb-01.png,A5（16 頁）,16,115年度版,,TRUE,1
+m-02,family-mission,家庭延伸任務：把八斗子的海味帶回家,親子,親子一起玩,手冊第 15 頁。回家和家人分享一種魚貨、一種漁法，下次買海鮮時多問一句。,/downloads/bdz-fish-handbook-a5-16p.pdf#page=15,/downloads/hb-01.png,A5（手冊第 15 頁）,,115年度版,,TRUE,2
+m-03,lesson-plan,校園教案《潮境共學：從八斗子海岸到每張餐桌的無障礙食魚之旅》,國小中高年級教師,老師帶著教,由本會、國立臺灣海洋大學教師與德和國小共同備課完成。內容包含：認識家鄉海與當季魚種、圖卡配對認識友善漁法、潮間帶生態與石花菜文化、食材鮮度觀察與前處理、簡易低碳烹調與學習反思。教案全文請洽本會。,,,,,115年度版,,TRUE,3
+m-04,worksheets,學習單（手冊任務頁）,教師・學生,老師帶著教,手冊第 4–14 頁可直接作為學習單使用：海鮮線索簿、慢魚三招、工具箱配對、海岸生活地圖、角色分工、最終挑戰。,/downloads/bdz-fish-handbook-a5-16p.pdf#page=4,/downloads/hb-01.png,A5,,115年度版,,TRUE,4
+m-05,bdz-fish-mission-cards,任務圖卡（12 張全套）,帶領者・教師,活動現場用,A6 任務圖卡 12 張：漁產辨識 4 張、漁法配對 4 張、潮間帶與文化 2 張、料理步驟與角色分工 2 張。每張都是「三個動作」，不一定要寫句子。,/downloads/bdz-fish-mission-cards-a6-12.pdf,/downloads/mc-01.png,A6（12 張）,12,115年度版,,TRUE,5
+m-06,market-cards,市場任務卡（CARD 01–04）,現場帶領,活動現場用,鎖管、白帶魚、當季底棲魚、海鮮百寶箱。,/downloads/bdz-fish-mission-cards-a6-12.pdf#page=1,/downloads/mc-01.png,A6,,115年度版,,TRUE,6
+m-07,method-cards,漁法圖卡（CARD 05–08）,現場帶領,活動現場用,棒受網、延繩釣、籠具、一支釣的配對任務。,/downloads/bdz-fish-mission-cards-a6-12.pdf#page=5,/downloads/mc-01.png,A6,,115年度版,,TRUE,7
+m-08,tide-cards,潮間帶觀察卡（CARD 09–10）,現場帶領,活動現場用,潮間帶觀察、石花菜 × 海女文化。,/downloads/bdz-fish-mission-cards-a6-12.pdf#page=9,/downloads/mc-01.png,A6,,115年度版,,TRUE,8
+m-09,kitchen-cards,料理任務卡（CARD 11–12）,現場帶領,活動現場用,海味料理步驟排序、海味角色卡（共融分工）。,/downloads/bdz-fish-mission-cards-a6-12.pdf#page=11,/downloads/mc-01.png,A6,,115年度版,,TRUE,9

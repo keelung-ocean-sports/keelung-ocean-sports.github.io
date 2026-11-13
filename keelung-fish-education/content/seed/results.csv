@@ -1,0 +1,13 @@
+year,metric,label,value,unit,target,description,published,order
+115,activities,推廣活動,4,場,4,體驗活動 3 場＋校園課程 1 場,TRUE,1
+115,participants,實際參與,102,人次,100,8/16 23 人、9/19 27 人、9/26 26 人、10/17 26 人,TRUE,2
+115,participantsRate,參與目標達成率,102,%,,實際 102 人次 ÷ 核定目標 100 人次,TRUE,3
+115,experience,體驗活動,3,場,3,8/16、9/26、10/17,TRUE,4
+115,school,校園課程,1,場,1,9/19 德和國小,TRUE,5
+115,material,自製教材,1,式,1,《八斗子食魚探索任務圖卡與學習手冊》,TRUE,6
+115,lessonPlan,校園教案,1,式,1,《潮境共學：從八斗子海岸到每張餐桌的無障礙食魚之旅》,TRUE,7
+115,partners,合作網絡,5,個單位,5,學術、學校、社區、共融支持,TRUE,8
+115,prepMeeting,籌備會議,3,小時,3,,TRUE,9
+115,coPlanning,共同備課,3,小時,3,,TRUE,10
+115,outreach,食魚教育擴散人次,,人次,263,結案審查確認後再填入實際值並改為發布,FALSE,11
+115,seafoodValue,促進國產水產品產值,,千元,64,結案審查確認後再填入實際值並改為發布,FALSE,12

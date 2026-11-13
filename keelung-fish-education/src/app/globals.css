@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 5rem; }
+body { @apply bg-white text-ink font-sans antialiased; line-height: 1.75; }
+h1, h2, h3 { @apply text-abyss font-bold tracking-tight; line-height: 1.3; }
+a { @apply text-harbor-600 underline underline-offset-4; }
+:focus-visible { outline: 3px solid #e0663f; outline-offset: 2px; border-radius: 4px; }
+.skip { @apply sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:rounded focus:shadow; }
+.wrap { @apply mx-auto max-w-content px-4 sm:px-6; }
+.eyebrow { @apply text-xs font-bold uppercase tracking-[0.2em] text-tide-600; }
+.btn { @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full px-5 py-2.5 font-semibold no-underline transition; }
+.btn-primary { @apply btn bg-coral-600 text-white hover:bg-coral-500; }
+.btn-ghost { @apply btn border-2 border-white/80 text-white hover:bg-white/10; }
+.btn-line { @apply btn border-2 border-harbor-600 text-harbor-600 hover:bg-harbor-50; }
+.card { @apply rounded-2xl bg-white ring-1 ring-abyss/10 shadow-sm overflow-hidden; }
+.prose-sea p { @apply my-4; }
+.prose-sea h2 { @apply mt-10 mb-2 text-xl; }
+.wave { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M0 6 Q15 0 30 6 T60 6 T90 6 T120 6' fill='none' stroke='%231a9a86' stroke-width='2'/%3E%3C/svg%3E"); background-repeat: repeat-x; background-size: 60px 8px; height: 8px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
