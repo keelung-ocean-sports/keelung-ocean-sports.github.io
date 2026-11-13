@@ -46,7 +46,7 @@ export default async function SpeciesDetail({ params }: { params: Promise<{ slug
             <Field label="來源">{s.origin}</Field>
             <Field label="怎麼看新鮮">{s.freshnessTips}</Field>
             <Field label="怎麼吃">{s.cooking}</Field>
-            <Field label="市場小提醒">{s.marketTips}</Field>
+            <Field label="選購提醒">{s.marketTips}</Field>
             <Field label="永續選擇">{s.sustainability}</Field>
             {methods.length > 0 && <Field label="可能的漁法"><ul className="flex flex-wrap gap-2">{methods.map((m) => <li key={m.slug}><Link href={`/fishing-methods/${m.slug}/`} className="btn-line text-sm">{m.name}</Link></li>)}</ul></Field>}
           </dl>

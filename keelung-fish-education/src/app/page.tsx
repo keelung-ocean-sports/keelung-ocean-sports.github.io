@@ -62,7 +62,7 @@ export default async function Home() {
 
       {/* 3. 四站 */}
       <section className="wrap py-16" aria-labelledby="h-journey">
-        <SectionHead id="h-journey" eyebrow="Ocean to Table" title="一條魚的旅行：市場 → 漁港 → 潮間帶 → 餐桌" lead="先在市場認出魚，再到漁港看牠怎麼被捕到，到潮間帶看海岸的樣子，最後把海味端上桌。" action={{ href: "/journey/", label: "看完整學習路徑" }} />
+        <SectionHead id="h-journey" title="八斗子食魚學習路徑" lead="從八斗子市場認識魚貨，到漁港了解漁法、到潮間帶觀察海岸，最後在生態廚房完成料理。" action={{ href: "/journey/", label: "看完整學習路徑" }} />
         <JourneyStrip />
       </section>
 
@@ -70,7 +70,7 @@ export default async function Home() {
       <section className="bg-abyss py-16 text-white" aria-labelledby="h-stats">
         <div className="wrap">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-tide-100">115年度</p><h2 id="h-stats" className="mt-1 text-2xl text-white sm:text-3xl">今年在八斗子做了這些事</h2></div>
+            <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-tide-100">115年度</p><h2 id="h-stats" className="mt-1 text-2xl text-white sm:text-3xl">年度成果</h2></div>
             <Link href="/results/115/" className="inline-flex min-h-[44px] items-center gap-1 font-semibold text-white">成果館 <Icon name="arrow" className="h-4 w-4" /></Link>
           </div>
           <Stats items={stats} dark />
@@ -89,7 +89,7 @@ export default async function Home() {
       {/* 8. 四場活動 */}
       <section className="bg-harbor-50 py-16" aria-labelledby="h-acts">
         <div className="wrap">
-          <SectionHead id="h-acts" eyebrow="115年度活動" title="四場活動，四種走法" action={{ href: "/activities/", label: "全部活動" }} />
+          <SectionHead id="h-acts" eyebrow="115年度活動" title="115年度活動紀錄" action={{ href: "/activities/", label: "全部活動" }} />
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">{cards.map((a) => <li key={a.slug}><ActivityCard a={a} /></li>)}</ul>
         </div>
       </section>
@@ -99,8 +99,8 @@ export default async function Home() {
         <Photo img={inclusiveImg} sizes="(min-width:1024px) 50vw, 100vw" className="aspect-[4/3] w-full" />
         <div>
           <p className="eyebrow">共融食魚教育</p>
-          <h2 id="h-inc" className="mt-1 text-2xl sm:text-3xl">不是每個人都要用同一種方式學</h2>
-          <p className="mt-3 text-ink-soft">市場、漁港、潮間帶都是真實場域。我們把任務拆小、把說明變成圖，讓不同條件的參與者都找得到自己能做的事。</p>
+          <h2 id="h-inc" className="mt-1 text-2xl sm:text-3xl">讓每個人都能參與的食魚課</h2>
+          <p className="mt-3 text-ink-soft">活動採用圖像化教材、任務拆解與角色分工，讓不同需求的參與者都能動手參與。</p>
           <ul className="mt-5 grid grid-cols-2 gap-2 text-[15px]">
             {["圖像化教材", "大字版提示", "任務拆解", "可坐式操作", "岸上替代觀察", "支持人力", "彈性休息"].map((x) => (
               <li key={x} className="flex items-center gap-2"><Icon name="check" className="h-5 w-5 text-tide-600" />{x}</li>
@@ -113,7 +113,7 @@ export default async function Home() {
       {/* 10. 教材 */}
       <section className="bg-sand-50 py-16" aria-labelledby="h-mat">
         <div className="wrap">
-          <SectionHead id="h-mat" eyebrow="教材下載" title="《八斗子食魚探索任務圖卡與學習手冊》" lead="手冊、圖卡、校園教案，家長和老師都可以直接拿去用。" action={{ href: "/materials/", label: "教材中心" }} />
+          <SectionHead id="h-mat" eyebrow="教材下載" title="《八斗子食魚探索任務圖卡與學習手冊》" lead="學習手冊、任務圖卡與校園教案，提供家長與教師下載使用。" action={{ href: "/materials/", label: "教材中心" }} />
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {materials.map((m) => (
               <li key={m.slug} className="card flex flex-col p-5">
@@ -130,7 +130,7 @@ export default async function Home() {
 
       {/* 11. 合作網絡 */}
       <section className="wrap py-16" aria-labelledby="h-pt">
-        <SectionHead id="h-pt" eyebrow="在地單位" title="一起把海味帶上桌的夥伴" action={{ href: "/partners/", label: "合作夥伴" }} />
+        <SectionHead id="h-pt" eyebrow="在地單位" title="合作單位" action={{ href: "/partners/", label: "合作夥伴" }} />
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {partners.map((p) => (
             <li key={p.id} className="rounded-2xl bg-harbor-50 p-4">

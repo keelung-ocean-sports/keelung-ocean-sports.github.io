@@ -10,10 +10,9 @@ export async function generateMetadata() {
 export default async function MissionsPage() {
   return (
     <>
-      <PageHero eyebrow="Missions" title="八斗子海味小偵探" lead="四個任務，市場、漁港、潮間帶、餐桌各一關。不需要登入，進度只存在你的手機上。" img={await resolveImage("0816-fish-id")} />
+      <PageHero title="八斗子海味小偵探" lead="市場、漁港、潮間帶、餐桌各一關，完成四關可獲得數位完成卡。" img={await resolveImage("0816-fish-id")} />
       <Crumbs items={[{ label: "親子任務" }]} />
       <div className="wrap max-w-3xl py-10">
-        <p className="mb-6 rounded-2xl bg-harbor-50 p-4 text-[15px]">家長小提醒：這裡不會要求姓名、電話，也沒有排行榜。現場活動時掃描 QR Code 即可進入本頁。</p>
         <Missions />
       </div>
     </>

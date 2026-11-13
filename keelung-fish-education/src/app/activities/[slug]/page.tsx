@@ -71,7 +71,7 @@ export default async function ActivityDetail({ params }: { params: Promise<{ slu
 
         <div className="wrap grid gap-12 py-12 lg:grid-cols-[1.4fr_1fr]">
           <section aria-labelledby="h-day">
-            <h2 id="h-day" className="text-2xl">這一天</h2>
+            <h2 id="h-day" className="text-2xl">活動紀錄</h2>
             <Prose text={a.content} />
             {isInclusive && (
               <div className="mt-8 rounded-2xl bg-tide-100/60 p-6">

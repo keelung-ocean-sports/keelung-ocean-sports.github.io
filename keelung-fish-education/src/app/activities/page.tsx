@@ -11,7 +11,7 @@ export default async function Activities() {
   const items = await activityCards();
   return (
     <>
-      <PageHero eyebrow="Activities" title="活動" lead="從八斗子市場、漁港、潮間帶到生態廚房的每一場活動。" img={await resolveImage("0919-group-banner")} />
+      <PageHero title="活動" lead="從八斗子市場、漁港、潮間帶到生態廚房的每一場活動。" img={await resolveImage("0919-group-banner")} />
       <Crumbs items={[{ label: "活動" }]} />
       <div className="wrap py-10"><ActivityBrowser items={items} /></div>
     </>

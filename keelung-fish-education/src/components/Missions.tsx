@@ -104,7 +104,7 @@ export function Missions() {
           <button type="button" className="btn-ghost mt-6" onClick={() => { if (confirm("確定要清除這台裝置上的任務進度嗎？")) setS(EMPTY); }}>重新開始</button>
         </section>
       ) : (
-        <p className="mt-8 text-center text-sm text-ink-soft">完成 4 個任務，就會出現你的數位完成卡。進度只存在這台裝置上。</p>
+        <p className="mt-8 text-center text-sm text-ink-soft">完成 4 個任務，就會出現你的數位完成卡。</p>
       )}
     </div>
   );

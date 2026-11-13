@@ -14,7 +14,7 @@ export function JourneyStrip({ highlight, dark = false, linkTo = "/journey/" }: 
           <>
             <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-full ${on ? "bg-coral-600 text-white" : dark ? "bg-white/10 text-white/50" : "bg-harbor-100 text-harbor-600/50"}`}><Icon name={k} /></span>
             <span>
-              <span className={`block text-xs font-bold tracking-widest ${dark ? "text-tide-100" : "text-tide-600"}`}>STOP {s.n}</span>
+              <span className={`block text-xs font-bold tracking-widest ${dark ? "text-tide-100" : "text-tide-600"}`}>第 {s.n} 站</span>
               <span className={`block text-lg font-bold ${dark ? "text-white" : "text-abyss"}`}>{s.short}</span>
               <span className={`block text-sm ${dark ? "text-white/80" : "text-ink-soft"}`}>{s.verb}</span>
             </span>

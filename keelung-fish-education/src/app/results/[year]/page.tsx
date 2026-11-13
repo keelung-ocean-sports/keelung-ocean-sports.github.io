@@ -75,7 +75,7 @@ export default async function Results({ params }: { params: Promise<{ year: stri
       </nav>
 
       <section id="overview" className="wrap py-12" aria-labelledby="h-ov">
-        <SectionHead id="h-ov" eyebrow="Results" title="成果數字" />
+        <SectionHead id="h-ov" title="成果數字" />
         {mismatch ? <p role="alert" className="rounded-xl bg-coral-100 p-4 text-coral-600">實際參與人次與各場人數加總不一致，請管理者檢查試算表。</p> : <Stats items={stats} />}
         <div className="mt-10 overflow-x-auto">
           <table className="w-full min-w-[320px] max-w-2xl border-collapse text-left text-[15px]">
@@ -96,7 +96,7 @@ export default async function Results({ params }: { params: Promise<{ year: stri
 
       <section id="timeline" className="bg-harbor-50 py-12" aria-labelledby="h-tl">
         <div className="wrap">
-          <SectionHead id="h-tl" eyebrow="Timeline" title="年度時間軸" />
+          <SectionHead id="h-tl" title="年度時間軸" />
           <ol className="relative grid gap-6 md:grid-cols-4">
             <span className="absolute left-6 top-0 h-full w-0.5 bg-harbor-500/30 md:left-0 md:top-6 md:h-0.5 md:w-full" aria-hidden="true" />
             {cards.map((a) => (
@@ -118,7 +118,7 @@ export default async function Results({ params }: { params: Promise<{ year: stri
 
       <section id="why" className="wrap grid gap-10 py-12 lg:grid-cols-2" aria-labelledby="h-why">
         <div>
-          <SectionHead id="h-why" eyebrow="Why" title="計畫緣起與問題意識" />
+          <SectionHead id="h-why" title="計畫緣起與問題意識" />
           <div className="space-y-4 text-[17px]">
             <p>基隆八斗子有市場、有漁港、有潮間帶，也有國立海洋科技博物館的生態廚房。這些場域就在生活周邊，但多數人買海鮮時，很少知道它從哪裡來、怎麼被捕到。</p>
             <p>另一方面，多數食魚教育仰賴口語講授與文字說明。對聽覺障礙者、身心障礙者及其家庭來說，真實場域裡的語言理解、移動與操作節奏，都可能讓他們只能在旁邊看。</p>
@@ -126,7 +126,7 @@ export default async function Results({ params }: { params: Promise<{ year: stri
           </div>
         </div>
         <div id="path">
-          <SectionHead eyebrow="Learning Path" title="四大學習路徑" />
+          <SectionHead title="四大學習路徑" />
           <JourneyStrip />
           <p className="mt-4 text-sm text-ink-soft">市場辨識、漁港漁法、潮間帶文化與生態廚房料理四大模組，是體驗活動與校園課程的共同核心。</p>
         </div>
@@ -150,7 +150,7 @@ export default async function Results({ params }: { params: Promise<{ year: stri
       </section>
 
       <section id="materials" className="wrap py-12" aria-labelledby="h-mat">
-        <SectionHead id="h-mat" eyebrow="Materials" title="教材與教案成果" />
+        <SectionHead id="h-mat" title="教材與教案成果" />
         <div className="grid gap-6 md:grid-cols-3">
           {[handbook, cardsPdf].filter(Boolean).map((m) => (
             <div key={m!.slug} className="card flex gap-4 p-5">
@@ -167,7 +167,7 @@ export default async function Results({ params }: { params: Promise<{ year: stri
 
       <section id="partners" className="bg-harbor-50 py-12" aria-labelledby="h-pt">
         <div className="wrap">
-          <SectionHead id="h-pt" eyebrow="Partners" title={`整合在地單位：${partners.length} 個`} />
+          <SectionHead id="h-pt" title={`整合在地單位：${partners.length} 個`} />
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {partners.map((p) => <li key={p.id} className="rounded-2xl bg-white p-5 ring-1 ring-abyss/10"><p className="text-sm font-bold text-tide-600">{p.role}</p><p className="mt-1 font-bold text-abyss">{p.name}</p><p className="mt-2 text-sm text-ink-soft">{p.description}</p></li>)}
           </ul>
@@ -175,12 +175,12 @@ export default async function Results({ params }: { params: Promise<{ year: stri
       </section>
 
       <section id="library" className="wrap py-12" aria-labelledby="h-lib">
-        <SectionHead id="h-lib" eyebrow="Library" title="海味圖鑑與漁法圖鑑" lead={`本年度建立海味 ${species.length} 種、漁法 ${methods.length} 種，後續年度持續擴充。`} />
+        <SectionHead id="h-lib" title="海味圖鑑與漁法圖鑑" lead={`本年度建立海味 ${species.length} 種、漁法 ${methods.length} 種，後續年度持續擴充。`} />
         <div className="flex flex-wrap gap-3"><Link href="/species/" className="btn-line">海味圖鑑</Link><Link href="/fishing-methods/" className="btn-line">漁法圖鑑</Link><Link href="/stories/" className="btn-line">活動故事</Link></div>
       </section>
 
       <section id="photos" className="wrap py-12" aria-labelledby="h-ph">
-        <SectionHead id="h-ph" eyebrow="Photos" title="精選照片" />
+        <SectionHead id="h-ph" title="精選照片" />
         <Gallery images={featured} label={`${year}年度精選照片`} />
       </section>
 

@@ -13,7 +13,7 @@ export default async function Stories() {
   const imgs = await Promise.all(list.map((s) => resolveImage(s.coverImage, s.title)));
   return (
     <>
-      <PageHero eyebrow="Stories" title="活動故事" lead="每一場活動的現場紀錄：在哪裡、做了什麼、看到什麼，怎麼從海洋走到餐桌。" img={await resolveImage("0816-dishes-table")} />
+      <PageHero title="活動故事" lead="每一場活動的現場紀錄：在哪裡、做了什麼、看到什麼，怎麼從海洋走到餐桌。" img={await resolveImage("0816-dishes-table")} />
       <Crumbs items={[{ label: "活動故事" }]} />
       <ul className="wrap grid gap-6 py-10 sm:grid-cols-2">
         {list.map((s, i) => <li key={s.slug}><TileCard href={`/stories/${s.slug}/`} title={s.title} tag={fmtDate(s.date)} body={s.summary} img={imgs[i]} /></li>)}

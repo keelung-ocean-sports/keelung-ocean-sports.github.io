@@ -15,7 +15,7 @@ export default async function SpeciesPage() {
   const items = await Promise.all(list.map(async (s) => ({ slug: s.slug, name: s.name, localName: s.localName, category: s.category, features: s.features, img: await resolveImage(s.coverImage, s.name) })));
   return (
     <>
-      <PageHero eyebrow="Species" title="今天市場有什麼魚？" lead="八斗子海味圖鑑。實際魚貨依季節與漁況變化，先從市場上常見的開始認識。" img={await resolveImage("1017-market-fish")} />
+      <PageHero title="今天市場有什麼魚？" lead="實際魚貨依季節與漁況變化，以下為活動中常見的海味。" img={await resolveImage("1017-market-fish")} />
       <Crumbs items={[{ label: "海味圖鑑" }]} />
       <div className="wrap py-10"><SpeciesBrowser items={items} categories={CATS} /></div>
     </>

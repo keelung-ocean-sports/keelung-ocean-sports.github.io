@@ -11,19 +11,19 @@ export default async function About() {
   const years = await getYears();
   return (
     <>
-      <PageHero eyebrow="About" title="關於潮境共學" lead={s.tagline} img={await resolveImage("0919-fisher-talk")} />
+      <PageHero title="關於潮境共學" lead={s.tagline} img={await resolveImage("0919-fisher-talk")} />
       <Crumbs items={[{ label: "關於潮境共學" }]} />
       <div className="wrap grid gap-10 py-12 lg:grid-cols-[1.4fr_1fr]">
         <div className="space-y-5 text-[17px]">
           <h2 className="text-2xl">一個長期的基隆食魚教育平台</h2>
-          <p>「潮境共學」由{s.org}經營。我們把八斗子的市場、漁港、潮間帶和生態廚房，當成認識海洋與食物的教室。</p>
+          <p>「潮境共學」由{s.org}經營，以八斗子的市場、漁港、潮間帶和生態廚房作為認識海洋與食物的學習場域。</p>
           <p>網站將持續累積每年的活動紀錄、海味與漁法圖鑑、教材及年度成果，115年度為第一年。</p>
-          <h2 className="pt-4 text-2xl">我們相信</h2>
+          <h2 className="pt-4 text-2xl">推廣理念</h2>
           <ul className="list-disc space-y-1 pl-6">
-            <li>認識一條魚，從看見它開始。</li>
+            <li>認識在地漁產與漁法，支持國產水產品。</li>
             <li>吃在地、吃當季、吃適量。</li>
-            <li>每個人都可以用適合自己的方式參與。</li>
-            <li>潮間帶上的生命，觀察就好，不帶走。</li>
+            <li>以共融設計讓不同需求的參與者都能參與。</li>
+            <li>潮間帶以觀察為主，不帶走生物。</li>
           </ul>
           <h2 className="pt-4 text-2xl">年度成果</h2>
           <ul className="flex flex-wrap gap-2">{years.map((y) => <li key={y}><Link href={`/results/${y}/`} className="btn-line">{y}年度成果館</Link></li>)}</ul>

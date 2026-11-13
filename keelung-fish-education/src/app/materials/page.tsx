@@ -8,7 +8,7 @@ export async function generateMetadata() {
 }
 
 const GROUPS = [
-  { key: "親子一起玩", id: "family", lead: "週末帶孩子去八斗子，或在家先玩一輪。" },
+  { key: "親子一起玩", id: "family", lead: "適合親子在家或到八斗子時使用。" },
   { key: "老師帶著教", id: "teachers", lead: "可直接用於校園課程的教案與學習單。" },
   { key: "活動現場用", id: "field", lead: "帶領者在市場、漁港、潮間帶、廚房用的任務圖卡。" },
 ];
@@ -25,7 +25,7 @@ export default async function Materials() {
   const list = await getMaterials();
   return (
     <>
-      <PageHero eyebrow="Materials" title="教材中心" lead="《八斗子食魚探索任務圖卡與學習手冊》：大字、圖像、任務化，可以用說、畫、勾、指、貼完成。" img={await resolveImage("0919-kitchen-lesson")} />
+      <PageHero title="教材中心" lead="《八斗子食魚探索任務圖卡與學習手冊》：大字、圖像、任務化，可以用說、畫、勾、指、貼完成。" img={await resolveImage("0919-kitchen-lesson")} />
       <Crumbs items={[{ label: "教材中心" }]} />
       <nav aria-label="教材分類" className="wrap pt-8"><ul className="flex flex-wrap gap-2">{GROUPS.map((g) => <li key={g.key}><a href={`#${g.id}`} className="btn-line text-sm">{g.key}</a></li>)}</ul></nav>
       {GROUPS.map((g) => (
