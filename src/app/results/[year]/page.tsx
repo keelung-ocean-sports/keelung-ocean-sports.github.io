@@ -163,13 +163,6 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
               })}
             </dl>
           ) : null}
-          {kpi("S08") ? (
-            <p className="mt-6 inline-flex flex-wrap items-baseline gap-x-3 gap-y-1 rounded-2xl bg-white/10 px-4 py-3 text-white ring-1 ring-white/20">
-              <span className="text-sm font-bold text-shallow">總參加人次</span>
-              <span className="text-3xl font-black sm:text-4xl"><CountUp value={kpi("S08")!.actual} /><span className="ml-1 text-sm font-bold text-sand">人次</span></span>
-              <span className="text-xs text-white/75">＝活動投保 {kpi("S01")?.actual}＋線上安全教育 {kpi("S02")?.actual}＋體適能評估 {kpi("K10")?.actual}＋活動後回饋 {kpi("S03")?.actual}（依核定計畫之任務人次計算）</span>
-            </p>
-          ) : null}
           {heroPhoto?.caption ? <p className="mt-6 text-xs text-white/60">主視覺：{heroPhoto.caption}</p> : null}
         </div>
         <div className="bg-white text-ink">
@@ -205,7 +198,7 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
       <div className="container-page pt-10">
         <Callout kind={y.dataStatus.includes("待") ? "warn" : "info"} title={`資料來源：${y.source}`}>
           {y.dataStatus ? <p>資料狀態：{y.dataStatus}。</p> : null}
-          <p>「人次」是任務人次，不等於不重複人數；報名意願、回饋問卷份數不加入年度人次。{y.privacyNote}</p>
+          <p>「人次」是任務人次，不等於不重複人數；報名意願與 LINE 好友數不加入年度人次。{y.privacyNote}</p>
         </Callout>
         {y.summary ? <p className="mt-8 max-w-3xl text-lg leading-9">{y.summary}</p> : null}
         {highlightActs.length ? (
@@ -447,13 +440,12 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
             <h3 className="text-lg font-bold">統計方法與不重複加計原則</h3>
             <ul className="mt-3 space-y-2 text-[15px]">
               {[
-                "總參加人次 ＝ 實體活動投保426＋線上安全教育203＋下水前科技體適能評估426＋活動後回饋96 ＝ 1,151人次；依核定計畫書，同一人完成不同階段任務分別計次。",
-                "年度任務人次（KPI 1）＝ 實體活動保險名冊人次 ＋ 線上安全教育任務人次，兩者性質不同、分別計次。",
+                "年度推廣與參與（總參加人次）＝ 實體活動投保426＋線上安全教育203＋下水前科技體適能評估426＋活動後回饋96 ＝ 1,151人次；依核定計畫書，同一人完成不同階段任務分別計次。",
                 "人次不等於不重複人數；同一人參加不同日期，分別計次。",
                 "投保人次依9個日期、11張個人保單彙總；保單及收據不重複計，上下午不重複加倍。",
                 "線上安全測驗以姓名及手機末三碼辨識重複作答，家長合填不另拆計。",
-                "報名意願登記、原始測驗份數、LINE好友數，均不加入任何人次；滿意度問卷只計入總參加人次。",
-                "趣味競賽人次已含於名冊合計；體適能只計入總參加人次，不加入KPI 1；專業培訓人次無名冊數據，暫不列入。",
+                "報名意願登記、原始測驗份數、LINE好友數，均不加入年度人次。",
+                "趣味競賽人次已含於名冊合計；專業培訓人次無名冊數據，暫不列入。",
                 "保險名冊為統計依據，現場出席以簽到紀錄核對。",
               ].map((t) => <li key={t} className="flex gap-2"><Icon name="check" className="mt-1 h-4 w-4 shrink-0 text-teal" />{t}</li>)}
             </ul>

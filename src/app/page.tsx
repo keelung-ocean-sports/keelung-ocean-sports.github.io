@@ -50,7 +50,6 @@ export default async function HomePage() {
   const mosaic = mediaByUsage(c, "年度精選").filter((m) => m.id !== hero?.id).slice(0, 5);
 
   const stats = [
-    { k: kpi("S08"), label: "總參加人次", note: "活動投保＋線上安全教育＋體適能評估＋活動後回饋" },
     { k: kpi("S01"), label: "實體活動名冊", note: "9 個活動日、15 個活動時段" },
     { k: kpi("S06") ?? { actual: "—", actualUnit: "人", target: "" }, label: "不重複參與者", note: "跨日期去重人數尚未確認" },
     { k: kpi("K10"), label: "科技體適能檢測", note: (k: string) => `下水前完成檢測｜目標 ${k} 人次` },
@@ -267,7 +266,7 @@ export default async function HomePage() {
             <h2 id="highlights" className="mt-2 text-[28px] font-black !text-white sm:text-[38px]">{y115.year}年度成果亮點</h2>
             <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_1.6fr]">
               <div className="rounded-3xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur-sm sm:p-8">
-                <p className="font-bold text-shallow">年度任務參與</p>
+                <p className="font-bold text-shallow">總參加人次</p>
                 <p className="mt-2 flex items-baseline gap-2">
                   <span className="text-6xl font-black tracking-tight sm:text-7xl"><CountUp value={k01.actual} /></span>
                   <span className="text-xl font-bold text-sand">人次</span>
@@ -276,7 +275,7 @@ export default async function HomePage() {
                   <div className="h-full rounded-full bg-gradient-to-r from-shallow to-sand" style={{ width: "100%" }} />
                 </div>
                 <p className="mt-3 text-[15px] text-white/85">目標 {k01.target} 人次｜達成率 <b className="text-sand">{achievement(k01.target, k01.actual)}</b></p>
-                <p className="mt-2 text-sm text-white/70">＝實體活動投保 {kpi("S01")?.actual} 人次＋線上安全教育 {kpi("S02")?.actual} 人次。「人次」是完成任務的次數，不等於實際人數。</p>
+                <p className="mt-2 text-sm text-white/70">＝實體活動投保 {kpi("S01")?.actual}＋線上安全教育 {kpi("S02")?.actual}＋體適能評估 {kpi("K10")?.actual}＋活動後回饋 {kpi("S03")?.actual} 人次（依核定計畫計算）。「人次」是完成任務的次數，不等於實際人數。</p>
               </div>
               <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
                 {stats.map((s) => (

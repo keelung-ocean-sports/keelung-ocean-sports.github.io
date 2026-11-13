@@ -12,9 +12,11 @@ export function consistencyChecks(c: Content) {
     const s02 = c.kpis.find((k) => k.year === y.year && k.id === "S02");
     const k01 = c.kpis.find((k) => k.year === y.year && k.id === "K01");
     if (s01) checks.push({ ok: Number(s01.actual) === sum, text: `${y.year}年度：活動管理「參與人次」加總 ${sum}，年度KPI「實體活動名冊」${s01.actual}` });
-    if (s01 && s02 && k01) {
-      const total = Number(s01.actual) + Number(s02.actual);
-      checks.push({ ok: total === Number(k01.actual), text: `${y.year}年度：名冊 ${s01.actual} ＋ 安全教育 ${s02.actual} ＝ ${total}，年度任務人次填 ${k01.actual}` });
+    const k10 = c.kpis.find((k) => k.year === y.year && k.id === "K10");
+    const s03 = c.kpis.find((k) => k.year === y.year && k.id === "S03");
+    if (s01 && s02 && k10 && s03 && k01) {
+      const total = Number(s01.actual) + Number(s02.actual) + Number(k10.actual) + Number(s03.actual);
+      checks.push({ ok: total === Number(k01.actual), text: `${y.year}年度：投保 ${s01.actual} ＋ 安全教育 ${s02.actual} ＋ 體適能 ${k10.actual} ＋ 活動後回饋 ${s03.actual} ＝ ${total}，年度推廣與參與填 ${k01.actual}` });
     }
     const coreK = c.kpis.filter((k) => k.year === y.year && k.category === "核定KPI");
     const assoc = coreK.filter((k) => k.confirm === "協會確認達標");
