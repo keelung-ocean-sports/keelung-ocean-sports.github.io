@@ -35,9 +35,22 @@ id,src,alt,caption,activitySlug,stop,featured,published,order
 1017-group-banner,1017-group-banner,參與者在漁船前拿著「潮境共學，永續海洋」布條合影,10/17 共融場合影,2026-1017-inclusive,harbor,FALSE,TRUE,7
 1017-cooking,1017-cooking,參與者在料理台前處理鮭魚、蛤蜊與蔬菜,分工備料：剪魚、洗菜、處理蛤蜊,2026-1017-inclusive,table,FALSE,TRUE,8
 1017-kitchen-wide,1017-kitchen-wide,生態廚房中參與者圍著長桌各自備料、翻炒,同一張長桌，每個人用自己的節奏參與,2026-1017-inclusive,table,TRUE,TRUE,9
-tide-group-explore,tide-group-explore,一群參與者在礁岩海岸上分散觀察,潮間帶觀察,,tide,TRUE,TRUE,1
-tide-guide-shell,tide-guide-shell,帶領者手上拿著小生物給參與者看,近距離看一看，看完放回原處,,tide,FALSE,TRUE,2
-tide-pool-crouch,tide-pool-crouch,參與者蹲在潮池邊觀察,在潮池邊蹲低，慢慢看,,tide,TRUE,TRUE,3
-tide-circle,tide-circle,參與者圍成一圈聽帶領者說明,潮間帶上的小組說明,,tide,FALSE,TRUE,4
-tide-pool-measure,tide-pool-measure,參與者在潮池旁觀察與紀錄,觀察與紀錄,,tide,FALSE,TRUE,5
-tide-buoy,tide-buoy,參與者圍在一顆長滿附著生物的漂流浮球旁拍照觀察,海岸上的漂流浮球，也是一堂課,,tide,FALSE,TRUE,6
+0816-group,0816-group,8/16參與家庭與講師在生態廚房料理台前，和一整桌完成的海味料理合影,8/16 大合照：一起完成的海味餐桌,2026-0816-fish-experience,table,TRUE,TRUE,9
+0816-kitchen-seated,0816-kitchen-seated,親子坐在生態廚房裡，聽講師在擺滿食材的料理台前說明,坐下來，先聽今天的食材從哪裡來,2026-0816-fish-experience,table,FALSE,TRUE,10
+0816-chef-demo,0816-chef-demo,講師在料理台前手拿魚貨說明，參與者圍坐聆聽,講師拿著魚，說明怎麼處理,2026-0816-fish-experience,table,FALSE,TRUE,11
+0816-girl-stirfry,0816-girl-stirfry,孩子拿木鏟翻炒鎖管，身旁大人準備調味,孩子親手翻炒鎖管,2026-0816-fish-experience,table,FALSE,TRUE,12
+0816-market,1017-market-stall,參與者在八斗子市場魚攤前觀察魚貨,八斗子市場：先看今天有什麼魚（照片攝於10/17同一市場）,2026-0816-fish-experience,market,FALSE,TRUE,0
+0926-harbor-crowd,0926-harbor-crowd,參與者在碼頭邊抬頭看漁人在船首平台上持長桿示範，旁邊是掛滿集魚燈的漁船,碼頭邊抬頭看船首示範,2026-0926-fish-experience,harbor,TRUE,TRUE,10
+0926-squid-show,0926-squid-show,講師在國立海洋科技博物館生態廚房舉起一隻鎖管說明,講師舉起鎖管：這就是今天的主角之一,2026-0926-fish-experience,table,FALSE,TRUE,11
+0926-auction-board,0926-auction-board,白板上寫著四組的出價紀錄,廚房裡的模擬拍賣：四組各有預算，競標今天的食材,2026-0926-fish-experience,table,FALSE,TRUE,12
+0926-kitchen-families,0926-kitchen-families,親子與家長坐在生態廚房裡，聽講師在擺滿蔬菜與食材的料理台前說明,開始料理前的說明,2026-0926-fish-experience,table,FALSE,TRUE,13
+0926-team-prep,0926-team-prep,參與者分工在水槽清洗、在砧板切菇類,分工備料：洗、切、整理,2026-0926-fish-experience,table,FALSE,TRUE,14
+0926-kid-wash-fish,0926-kid-wash-fish,孩子在水槽中清洗魚，家長在旁處理食材,孩子親手清洗魚,2026-0926-fish-experience,table,TRUE,TRUE,15
+0926-cook-trio,0926-cook-trio,三位參與者在料理台前備料下鍋,一起顧鍋、一起備料,2026-0926-fish-experience,table,FALSE,TRUE,16
+0926-dishes2,0926-dishes2,料理台上擺著烤魚、鹽烤蝦、汆燙鎖管等完成的料理,9/26 完成的海味料理,2026-0926-fish-experience,table,FALSE,TRUE,17
+tide-group-explore,tide-group-explore,一群參與者在礁岩海岸上分散觀察,潮間帶觀察,2026-0816-fish-experience,tide,TRUE,TRUE,1
+tide-guide-shell,tide-guide-shell,帶領者手上拿著小生物給參與者看,近距離看一看，看完放回原處,2026-0926-fish-experience,tide,FALSE,TRUE,2
+tide-pool-crouch,tide-pool-crouch,參與者蹲在潮池邊觀察,在潮池邊蹲低，慢慢看,2026-1017-inclusive,tide,TRUE,TRUE,3
+tide-circle,tide-circle,參與者圍成一圈聽帶領者說明,潮間帶上的小組說明,2026-0816-fish-experience,tide,FALSE,TRUE,4
+tide-pool-measure,tide-pool-measure,參與者在潮池旁觀察與紀錄,觀察與紀錄,2026-0926-fish-experience,tide,FALSE,TRUE,5
+tide-buoy,tide-buoy,參與者圍在一顆長滿附著生物的漂流浮球旁拍照觀察,海岸上的漂流浮球，也是一堂課,2026-1017-inclusive,tide,FALSE,TRUE,6
