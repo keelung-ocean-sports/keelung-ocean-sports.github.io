@@ -43,6 +43,7 @@ export default async function Results({ params }: { params: Promise<{ year: stri
   const materials = await getMaterials();
   const handbook = materials.find((m) => m.slug === "bdz-fish-handbook");
   const cardsPdf = materials.find((m) => m.slug === "bdz-fish-mission-cards");
+  const lesson = materials.find((m) => m.slug === "lesson-plan");
   const partners = await getPartners();
   const featured = await photosFor((p) => p.featured);
   const species = await getSpecies();
@@ -160,7 +161,10 @@ export default async function Results({ params }: { params: Promise<{ year: stri
               <div><p className="text-sm font-bold text-tide-600">自製教材 1 式</p><h3 className="mt-1 text-base">{m!.title}</h3><p className="text-sm text-ink-soft">{m!.printSize}</p><a href={asset(m!.pdfUrl)} target="_blank" rel="noopener" className="mt-2 inline-flex min-h-[44px] items-center gap-1 font-semibold"><Icon name="download" className="h-5 w-5" />PDF</a></div>
             </div>
           ))}
-          <div className="card p-5"><p className="text-sm font-bold text-tide-600">校園教案 1 式</p><h3 className="mt-1 text-base">{v("lessonPlan")?.description}</h3><Link href="/materials/#lesson-plan" className="mt-2 inline-flex min-h-[44px] items-center">看教案架構</Link></div>
+          {lesson && <div className="card flex gap-4 p-5">
+            {lesson.previewImage && /* eslint-disable-next-line @next/next/no-img-element */ <img src={asset(lesson.previewImage)} alt={`${lesson.title} 封面`} width={96} height={136} loading="lazy" className="h-36 w-24 shrink-0 rounded-md object-cover ring-1 ring-abyss/10" />}
+            <div><p className="text-sm font-bold text-tide-600">校園教案 1 式</p><h3 className="mt-1 text-base">{v("lessonPlan")?.description}</h3><p className="text-sm text-ink-soft">{lesson.printSize}</p>{lesson.pdfUrl ? <a href={asset(lesson.pdfUrl)} target="_blank" rel="noopener" className="mt-2 inline-flex min-h-[44px] items-center gap-1 font-semibold"><Icon name="download" className="h-5 w-5" />PDF</a> : <Link href="/materials/#lesson-plan" className="mt-2 inline-flex min-h-[44px] items-center">看教案架構</Link>}</div>
+          </div>}
         </div>
       </section>
 

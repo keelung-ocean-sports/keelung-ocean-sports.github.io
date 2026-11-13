@@ -121,7 +121,7 @@ export default async function Home() {
                 <h3 className="mt-1 text-lg">{m.title.replace(/《八斗子食魚探索任務圖卡與學習手冊》/, "")}</h3>
                 <p className="mt-2 line-clamp-3 flex-1 text-sm text-ink-soft">{m.description}</p>
                 {m.pdfUrl ? <a href={asset(m.pdfUrl)} className="mt-4 inline-flex min-h-[44px] items-center gap-1 font-semibold" target="_blank" rel="noopener"><Icon name="download" className="h-5 w-5" />開啟 PDF<span className="sr-only">：{m.title}</span></a>
-                  : <Link href="/materials/#lesson-plan" className="mt-4 inline-flex min-h-[44px] items-center gap-1 font-semibold">看教案架構</Link>}
+                  : <Link href="/materials/#lesson-plan" className="mt-4 inline-flex min-h-[44px] items-center gap-1 font-semibold">看教案</Link>}
               </li>
             ))}
           </ul>
