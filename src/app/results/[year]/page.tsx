@@ -101,7 +101,11 @@ export default async function YearPage({ params }: { params: Promise<{ year: str
   const kindCount = (["水域活動", "共融", "競賽", "培訓"] as const).map((k) => ({ k, n: timeline.filter((t) => t.kind === k).length })).filter((x) => x.n);
   const heroPhoto = mediaByUsage(c, "成果館主視覺").find((m) => m.year === year) ?? featured[0];
   const keyNums = ["K01", "S01", "S02", "S07", "K10", "S04"].map(kpi).filter((k): k is NonNullable<typeof k> => !!k && !!k.actual);
-  const highlightActs = acts.filter((a) => a.coverId).sort((a, b) => Number(b.headcount || 0) - Number(a.headcount || 0)).slice(0, 3).sort((a, b) => a.date.localeCompare(b.date));
+  // Preserve the original editorial photo selection when attendance data changes.
+  const originalHighlights = ["A115-0719", "A115-0802", "A115-1004"];
+  const highlightActs = year === "115"
+    ? originalHighlights.flatMap((id) => acts.filter((a) => a.id === id && a.coverId))
+    : acts.filter((a) => a.coverId).sort((a, b) => Number(b.headcount || 0) - Number(a.headcount || 0)).slice(0, 3).sort((a, b) => a.date.localeCompare(b.date));
 
   const rosterDays = acts.filter((a) => a.headcount);
   const rosterMax = Math.max(...rosterDays.map((a) => Number(a.headcount)), 1);
